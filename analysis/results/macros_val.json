@@ -19,5 +19,10 @@
  "why3": "LR 1, Mmax 260",
  "nModes": 2886,
  "secEoS": "202",
- "MmaxMax": "3.34"
+ "MmaxMax": "3.34",
+ "convFmax": "3e-08",
+ "convTmax": "5e-07",
+ "crustDf": "0.20",
+ "crustShiftLo": "1.313",
+ "crustShiftHi": "1.338"
 }

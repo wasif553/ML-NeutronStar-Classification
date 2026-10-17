@@ -29,3 +29,15 @@ M["secEoS"] = f"{np.mean([x['seconds'] for x in recs]):.0f}"
 M["MmaxMax"] = f"{max(x['Mmax'] for x in recs):.2f}"
 json.dump(M, open("macros_val.json", "w"), indent=1)
 print(M)
+
+# numerical error budget (convergence_tests.py)
+try:
+    C = json.load(open("results_convergence.json"))
+    allv = [x for v in C["variants"].values() for k, x in v.items() if k != "default"]
+    M2 = {"convFmax": f"{max(abs(x['df_rel']) for x in allv):.0e}", "convTmax": f"{max(abs(x['dtau_rel']) for x in allv):.0e}"}
+    cr = C["crust"]; ks = sorted(cr)
+    M2["crustDf"] = f"{100*abs(cr[ks[0]]['f_nuc']/cr[ks[1]]['f_nuc']-1):.2f}"
+    M2["crustShiftLo"] = f"{100*min(c['shift_rel'] for c in cr.values()):.3f}"; M2["crustShiftHi"] = f"{100*max(c['shift_rel'] for c in cr.values()):.3f}"
+    json.dump({**M, **M2}, open("macros_val.json", "w"), indent=1); print(M2)
+except FileNotFoundError:
+    pass

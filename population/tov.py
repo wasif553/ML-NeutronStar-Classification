@@ -24,7 +24,11 @@ def _rhs_factory(eos):
     return rhs
 
 
-def solve_star(eos, pc, tidal=True, dense=False, rtol=1e-10):
+RTOL_TOV = 1e-10
+
+
+def solve_star(eos, pc, tidal=True, dense=False, rtol=None):
+    rtol = RTOL_TOV if rtol is None else rtol
     """Integrate outward from the centre; returns dict with M [Msun], R [km], Lambda, and (optionally) a dense solution."""
     ec = eos.eps(pc)
     r0 = 1e-4

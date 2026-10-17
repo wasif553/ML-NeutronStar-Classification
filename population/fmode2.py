@@ -12,6 +12,7 @@ from matter_rhs import coef
 
 L = 2
 C_KMS = 2.99792458e5
+RTOL_INT, RTOL_EXT = 1e-10, 1e-11      # integration tolerances (varied in convergence_tests.py)
 
 
 def bg_terms(bg, r):
@@ -51,7 +52,7 @@ def interior(bg, om, r0=None, cut=1e-5):
         A = matrix(bg, r, om)[0]
         Y = Y.reshape(4, 2)
         return (A @ Y).reshape(-1)
-    sol = solve_ivp(rhs, (r0, rend), y0.reshape(-1).astype(complex), method="DOP853", rtol=1e-10, atol=1e-30)
+    sol = solve_ivp(rhs, (r0, rend), y0.reshape(-1).astype(complex), method="DOP853", rtol=RTOL_INT, atol=1e-30)
     Y = sol.y[:, -1].reshape(4, 2)
     # surface condition: Lagrangian pressure perturbation vanishes
     t, (p, m, nu, e, cs2, f) = bg_terms(bg, rend)
@@ -106,7 +107,7 @@ def ingoing_amplitude(bg, om, rmax=None, cut=1e-5):
     def fz(rr, s):
         f = 1 - 2 * M / rr
         return [s[1], (zerilli_V(rr, M) - om2) * s[0] / f ** 2 - (2 * M / rr ** 2) / f * s[1]]
-    sol = solve_ivp(fz, (rend, rmax), [Z, Zr], method="DOP853", rtol=1e-11, atol=1e-30)
+    sol = solve_ivp(fz, (rend, rmax), [Z, Zr], method="DOP853", rtol=RTOL_EXT, atol=1e-30)
     Zn, Zrn = sol.y[0, -1], sol.y[1, -1]
     zo, dzo = asym_Z(rmax, M, om, +1, rend)
     zi, dzi = asym_Z(rmax, M, om, -1, rend)
