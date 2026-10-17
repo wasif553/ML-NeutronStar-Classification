@@ -12,7 +12,8 @@ from matter_rhs import coef
 
 L = 2
 C_KMS = 2.99792458e5
-RTOL_INT, RTOL_EXT = 1e-10, 1e-11      # integration tolerances (varied in convergence_tests.py)
+RTOL_INT, RTOL_EXT = 1e-10, 1e-11
+FROZEN = False                         # True: frozen-composition adiabatic response in the perturbation equations (sensitivity test)      # integration tolerances (varied in convergence_tests.py)
 
 
 def bg_terms(bg, r):
@@ -20,8 +21,9 @@ def bg_terms(bg, r):
     lam = -np.log(f)
     lam_d = (2 / f) * (PI4 * r * e - m / r ** 2)
     p_d = -(e + p) * nup / 2
-    eps_d = p_d / cs2
-    return dict(r=r, nu=nu, lam=lam, eps=e, p=p, cs2=cs2, nu_d=nup, lam_d=lam_d, eps_d=eps_d, p_d=p_d), (p, m, nu, e, cs2, f)
+    eps_d = p_d / cs2                                   # background gradient always uses the equilibrium barotrope
+    cs2p = bg.eos.cs2_pert(p) if (FROZEN and hasattr(bg.eos, "cs2_pert")) else cs2   # perturbation response (adiabatic index)
+    return dict(r=r, nu=nu, lam=lam, eps=e, p=p, cs2=cs2p, nu_d=nup, lam_d=lam_d, eps_d=eps_d, p_d=p_d), (p, m, nu, e, cs2, f)
 
 
 def matrix(bg, r, om):

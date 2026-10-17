@@ -57,6 +57,9 @@ def dm_admixed(base, G, mchi, rho_max=3.2e15, npts=3000):
     p_tot = pN * ERG_CC_TO_MEV_FM3
     e_tot = eN * ERG_CC_TO_MEV_FM3
     nchi = np.zeros_like(rho)
+    seg = np.array([base._seg(p_) for p_ in pN]); gam = np.array([base.Gam[j] for j in seg])
+    dpN = gam * pN * ERG_CC_TO_MEV_FM3                  # dp_N / d ln n_B at fixed composition (MeV/fm^3)
+    dpchi = np.zeros_like(rho); ech = np.zeros_like(rho)  # frozen-composition response and (eps+p) of the dark component
     for i, mu in enumerate(muN):
         if mu <= mchi: continue
         f = lambda k: np.sqrt(k * k + mchi ** 2) + HBARC * G * (k / HBARC) ** 3 / (3 * np.pi ** 2) - mu
@@ -67,10 +70,17 @@ def dm_admixed(base, G, mchi, rho_max=3.2e15, npts=3000):
         e_tot[i] += eps_f + 0.5 * HBARC * G * n * n
         p_tot[i] += p_f + 0.5 * HBARC * G * n * n
         nchi[i] = n
+        Ek = np.sqrt(k * k + mchi ** 2)
+        dpchi[i] = n * k * k / (3 * Ek) + HBARC * G * n * n
+        ech[i] = (eps_f + p_f) + HBARC * G * n * n
     p_g, e_g = p_tot * MEV_FM3_GEO, e_tot * MEV_FM3_GEO
     de = np.gradient(e_g); dpp = np.gradient(p_g)
     cs2 = np.clip(dpp / de, 1e-4, 5.0)
     eos = TabEOS(p_g, e_g, cs2)
+    # frozen-composition (no baryon <-> dark conversion) adiabatic response with a common compression of both components
+    cs2f = np.clip((dpN + dpchi) / ((eN + pN) * ERG_CC_TO_MEV_FM3 + ech), 1e-4, 5.0)
+    eos._lcf = PchipInterpolator(np.log(p_g), np.log(cs2f))
+    eos.cs2_pert = lambda p, eq=eos: float(np.exp(eq._lcf(np.log(max(p, eq.pmin)))))
     eos.dark_fraction_central = (nchi[-1] * mchi) / (e_tot[-1]) if e_tot[-1] > 0 else 0.0
     return eos
 

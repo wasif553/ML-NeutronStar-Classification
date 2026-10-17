@@ -1,5 +1,5 @@
 """Population experiment: classification of EoS *populations* with whole-EoS hold-out (grouped cross-validation)."""
-import numpy as np, pandas as pd, json, warnings, sys, time, zlib
+import numpy as np, pandas as pd, json, warnings, sys, time, zlib, os
 from joblib import Parallel, delayed
 from scipy.special import logsumexp, softmax
 from sklearn.preprocessing import StandardScaler
@@ -39,8 +39,11 @@ def draw(idx_eos, mass_idx, ndraw, cols, sig, rng):
     X = np.repeat(X.reshape(-1, len(cols)), ndraw, 0)
     y = np.repeat(np.repeat(CLS[idx_eos], len(mass_idx)), ndraw)
     g = np.repeat(np.repeat(idx_eos, len(mass_idx)), ndraw)
-    X = X * (1 + np.array(sig) * rng.standard_normal(X.shape))
-    return np.clip(X, 1e-12, None), y, g
+    sg = np.array(sig); eps = rng.standard_normal(X.shape); bad = (1 + sg * eps) <= 0
+    while bad.any():                       # redraw non-positive factors (truncated Gaussian); no-op unless sigma is large
+        eps[bad] = rng.standard_normal(int(bad.sum())); bad = (1 + sg * eps) <= 0
+    X = X * (1 + sg * eps)
+    return X, y, g
 
 
 def bayes_kernel(Xobs, ref_eos, mass_idx, cols, sig, classes, chunk=400):
@@ -122,6 +125,7 @@ if __name__ == "__main__":
     scen = [s for s in SCEN if which == "all" or s in which.split(",")]
     jobs = [(s, rep, f) for s in scen for rep in range(N_REP) for f in range(K_FOLDS)]
     out = Parallel(n_jobs=int(sys.argv[2]) if len(sys.argv) > 2 else 20, verbose=5)(delayed(task)(*j) for j in jobs)
-    pd.DataFrame([r for o in out for r in o[0]]).to_csv("results_pop_main.csv", index=False)
-    json.dump([o[1] for o in out], open("results_pop_conf.json", "w"))
+    SUF = os.environ.get("OUT_SUFFIX", "")
+    pd.DataFrame([r for o in out for r in o[0]]).to_csv(f"results_pop_main{SUF}.csv", index=False)
+    json.dump([o[1] for o in out], open(f"results_pop_conf{SUF}.json", "w"))
     print("done")

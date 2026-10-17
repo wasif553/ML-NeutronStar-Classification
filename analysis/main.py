@@ -94,10 +94,13 @@ def task(regime_name, rep, s, fs, seed):
 
 
 if __name__ == "__main__":
-    jobs = [(rg, rep, s, fs, 1000 * rep + 7) for rg in REGIMES for rep in range(NREP) for s in SCALES for fs in FEATS]
+    import os
+    only_s = [float(x) for x in os.environ.get("ONLY_SCALES", "").split(",") if x]; only_f = [x for x in os.environ.get("ONLY_FS", "").split(",") if x]
+    jobs = [(rg, rep, s, fs, 1000 * rep + 7) for rg in REGIMES for rep in range(NREP) for s in SCALES for fs in FEATS
+            if (not only_s or s in only_s) and (not only_f or fs in only_f)]
     print(len(jobs), "tasks", flush=True)
     out = Parallel(n_jobs=6, verbose=5)(delayed(task)(*j) for j in jobs)
     rows = [r for o in out for r in o[0]]
-    pd.DataFrame(rows).to_csv("results/main.csv", index=False)
-    json.dump([o[1] for o in out], open("results/confusions.json", "w"))
+    pd.DataFrame(rows).to_csv(os.environ.get("MAIN_OUT", "results/main.csv"), index=False)
+    json.dump([o[1] for o in out], open(os.environ.get("CONF_OUT", "results/confusions.json"), "w"))
     print("done; mean task time", np.mean([o[2] for o in out]))

@@ -54,7 +54,10 @@ def noisy_copies(d, cols, scale, reps, rng):
     base = d[cols].values.astype(float)
     sig = scale * np.array([REL_SIG[c] for c in cols])
     X = np.repeat(base, reps, 0)
-    X = X * (1 + sig * rng.standard_normal(X.shape))
+    eps = rng.standard_normal(X.shape); bad = (1 + sig * eps) <= 0
+    while bad.any():                       # redraw non-positive factors (truncated Gaussian); no-op unless sigma is large
+        eps[bad] = rng.standard_normal(int(bad.sum())); bad = (1 + sig * eps) <= 0
+    X = X * (1 + sig * eps)
     return X, np.repeat(d.y.values, reps), np.repeat(np.arange(len(d)), reps)
 
 

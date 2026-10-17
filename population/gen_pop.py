@@ -6,7 +6,11 @@ from families import *
 from fmode import Background
 import fmode2 as F
 
-OUT = "pop_data"
+FAM = os.environ.get("POP_FAMILY", "A")
+if FAM == "B":
+    import families_b as FB
+    sample_params, build = FB.sample_params, FB.build
+OUT = "pop_data" if FAM == "A" else "pop_data_" + FAM
 K2HZ = 2 * np.pi / F.C_KMS
 MASSES = np.array([1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9])
 

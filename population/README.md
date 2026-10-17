@@ -16,8 +16,6 @@ python derive_vac2.py && python derive_matter.py && python prep_matter.py && pyt
 python gen_pop.py 110 12   # writes pop_data/*.json ; the paper uses the first 90 per class (pop_data_utils.N_PER_CLASS)
 # 4. experiments, figures, tables
 python pop_experiment.py all 14      # results_pop_main.csv, results_pop_conf.json
-python gen_base.py 14                # paired nuclear-base observables of the dark-matter EoS (pop_base/)
-python paired_analysis.py            # known-nuclear-EoS dark-matter detectability, macros_paired.json
 python pop_report.py && python extra_report.py   # figures, tables/, macros_pop.json, macros_val.json
 ```
 
