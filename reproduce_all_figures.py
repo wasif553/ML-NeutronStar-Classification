@@ -57,7 +57,7 @@ def main():
     # -----------------------------
     # 1) Load data
     # -----------------------------
-    xlsx_path = "C:/Users/maste/Documents/Python learning/Ml/DataML_shuffled.xlsx"  # change if needed
+    xlsx_path = "DataML_shuffled.xlsx"  # same folder as this script
     df = pd.read_excel(xlsx_path)
 
     label_col = "EoS"

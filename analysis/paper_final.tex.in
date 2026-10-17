@@ -1,0 +1,255 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{amsmath,amssymb,graphicx,booktabs,array,microtype,xcolor,caption,float}
+\usepackage[hidelinks]{hyperref}
+\usepackage[authoryear,round]{natbib}
+\captionsetup{font=small,labelfont=bf}
+\newcommand{\Msun}{M_\odot}
+\newcommand{\ftau}{M,R,f,\tau}
+
+\title{Exploring the Limits of Machine-Learning Classification of Neutron-Star Matter Models:\\[2pt]
+\large Populations of Equations of State, Literature-Anchored Errors and Calibrated Uncertainty}
+\author{Wasif Husain\\ \small School of Science, Technology and Engineering, University of Sunshine Coast, Adelaide 5000}
+\date{Revised manuscript (supersedes arXiv:2512.23758v3)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Machine-learning classification of neutron-star composition is usually demonstrated on synthetic data in which every composition is a single equation of state (EoS) and test points are random draws along the same sequences.
+We show first that the headline 97\% accuracy of a released benchmark of @@nTot@@ such models is largely interpolation between neighbouring models (the MLP accuracy falls from @@blksixMLP1@@\% to @@blksixMLP6@@\% and @@blksixMLP24@@\% when blocks of six and 24 models are withheld) and that its tabulated surface redshift leaks class information.
+We then replace the benchmark by a population study of @@nEoS@@ EoS, @@nEoS0@@ in each of four composition scenarios (nucleonic, hyperonic-like, strange, and neutron-decay dark-matter-admixed), solved with a full general-relativistic TOV, tidal and $f$-mode code that reproduces six independent reference $f$-mode frequencies to @@valFmax@@\%.
+With whole-EoS hold-out, six classifiers (logistic regression, $k$-NN, random forest, gradient boosting, SVM and an MLP ensemble) reach only @@nf_MLP-ens_ALL@@\% accuracy even without measurement error, the same as a kernel-Bayes classifier that uses the exact error model: the limit is information, not learning.
+Strange matter is separable (@@cm_ALL_0_11@@\% recall when $f$ is measured accurately), hyperonic-like matter partly (@@cm_ALL_0_33@@\%), but nucleonic and dark-matter-admixed matter are indistinguishable once the nuclear EoS is unknown (pairwise accuracy @@pairNucDM_ALL_0@@\%).
+With errors anchored on published measurements and forecasts (NICER-like 10\% in $M$ and 9\% in $R$, and a 20\% $f$-mode measurement) the accuracy is @@sc_NICER_mlp@@--@@sc_NICERpf20_mlp@@\% (chance 25\%) and conformal prediction sets contain @@pu_NICERpf20_t_setsize@@ of four classes; 5\%, 5\% and 2\% errors would give @@pd_SO_1p0_mlp@@\%, and the damping time adds nothing.
+Probabilities are well calibrated and conformal coverage is about 90\%.
+All results are conditional on the phenomenological EoS families defined here; no inference about real stars is claimed.
+\end{abstract}
+
+\section{Introduction}
+Neutron stars probe matter at densities well above nuclear saturation \citep{LP04,OF16}, and a wide range of compositions---purely nucleonic matter, hyperon-rich matter, deconfined quark matter and neutron decay into a dark sector \citep{Husain22}---has been proposed.
+Machine learning has been applied to neutron-star inference, for example to map observed masses and radii to the EoS \citep{Fujimoto18}. A natural question is how far a supervised classifier can distinguish composition from observables, and where the answer is limited by physics rather than by the algorithm.
+
+A previous version of this work (arXiv:2512.23758v3) trained a small multilayer perceptron (MLP) on seven observables of @@nTot@@ synthetic stellar models, each class being one EoS, and reported a test accuracy of 97.4\% on 116 held-out models. That number does not support the conclusions drawn from it, and a single sequence per class cannot say how well compositions can be told apart when the EoS itself is uncertain. This revision therefore does the following.
+\begin{enumerate}
+\item \textbf{Audits the single-sequence benchmark} (Sec.~\ref{sec:legacy}): class sizes, mass coverage, a class-dependent redshift inconsistency, and the dependence of the accuracy on how test points are chosen.
+\item \textbf{Builds a population of EoS} for each composition scenario and solves every one with a validated full-GR code (Sec.~\ref{sec:pop}); the validation against six independent $f$-mode frequencies is given in Table~\ref{tab:valid}.
+\item \textbf{Evaluates with whole-EoS hold-out}, seven learners and a kernel-Bayes reference classifier (Secs.~\ref{sec:methods}, \ref{sec:results}), under error scenarios taken from published measurements and forecasts as well as a scale that shows what precision would be needed.
+\item \textbf{Quantifies uncertainty}: calibration, temperature scaling and conformal prediction sets with exchangeability at the level of whole EoS.
+\end{enumerate}
+Appendix~\ref{sec:legacynoise} keeps the single-sequence noise study, and Appendix~\ref{sec:changes} lists each claim of the earlier version that has been withdrawn or changed.
+
+\section{What the single-sequence benchmark can and cannot show}\label{sec:legacy}
+\subsection{Audit of the released data set}\label{sec:data}
+The released data (\texttt{DataML.xlsx}) hold @@nTot@@ models of four classes: a nucleonic and a hyperonic quark--meson-coupling EoS \citep{Stone07}, a neutron-decay dark-matter scenario \citep{Husain22} and MIT-bag strange matter; the oscillation quantities come from the earlier oscillation code of \citet{HusainOsc} and are used as released here. Table~\ref{tab:audit} and Fig.~\ref{fig:audit} summarise the data.
+\begin{table}[t]\centering\small
+\caption{Composition of the released single-sequence data set (@@nTot@@ models). $N_{\ge0.5}$ and $N_{\ge1}$ are the numbers of models with $M\ge0.5\,\Msun$ and $M\ge1\,\Msun$.}\label{tab:audit}
+\begin{tabular}{lrrrrrr}\toprule
+Class & $N$ & $M$ range ($\Msun$) & $R$ range (km) & $M<0.5\,\Msun$ & $N_{\ge0.5}$ & $N_{\ge1}$\\\midrule
+\input{tables/tab_audit}\\\bottomrule
+\end{tabular}\end{table}
+\begin{figure}[t]\centering\includegraphics[width=\textwidth]{figs/fig1_data_audit.pdf}
+\caption{(a) Mass--radius sequences of the four classes. (b) Distribution of masses; the dotted line is $1\,\Msun$. (c) Fractional difference between the tabulated surface redshift and the value implied by $M$ and $R$; the hyperonic and dark-matter classes agree to $\sim\!0.03\%$, the nucleonic and strange classes do not.}\label{fig:audit}\end{figure}
+\begin{enumerate}
+\item \emph{Class sizes.} The classes contain 222, 220, 122 and 206 models (not $\approx190$ each).
+\item \emph{Sampling.} Models lie on a regular radius grid ($\Delta R=0.05$\,km) along each sequence, so neighbouring models are almost identical: for @@nnSame@@\% of the models the nearest neighbour in standardised $(\ln M,\ln R,\ln f,\ln\tau)$ belongs to the same class.
+\item \emph{Mass coverage.} @@nBelow05pct@@\% of the models have $M<0.5\,\Msun$ and @@nBelow1pct@@\% have $M<1\,\Msun$, down to $@@minMass@@\,\Msun$.
+\item \emph{The dark-matter sequence ends at $0.68\,\Msun$,} so at $M\gtrsim0.7\,\Msun$ the class is excluded by the mass alone.
+\item \emph{Redshift inconsistency.} For the dark-matter and hyperonic classes the tabulated $z$ equals the Schwarzschild value implied by $(M,R)$ to $\approx$@@zresDM@@\%; for the nucleonic and strange classes the median deviation is +@@zresNuc@@\% and +@@zresStr@@\%. A logistic regression on the redshift residual alone separates \{nucleonic, strange\} from \{dark matter, hyperonic\} with @@leakZ@@\% cross-validated accuracy (@@leakM@@\% for $M$ alone, @@leakMR@@\% for $M$ and $R$). The redshift is therefore a class-dependent artefact and is not used in any analysis here.
+\end{enumerate}
+
+\subsection{Replicating the earlier protocol}\label{sec:repro}
+Table~\ref{tab:repro} and Fig.~\ref{fig:repro} repeat the earlier random-split protocol for 100 seeds. The published 97.4\% is typical ($@@reproMean@@\pm@@reproSd@@\%$), so it is reproducible, but it is not specific to the MLP: a random forest reaches @@reproRF@@\%. Removing the redshift changes the MLP result only from @@reproMean@@\% to @@reproNoZ@@\%. With $M$ and $R$ only, a $k$-nearest-neighbour classifier reaches @@reproMR@@\%, and with $M$ alone logistic regression is at chance (@@reproMonly@@\%).
+\begin{table}[t]\centering\small
+\caption{Random-split test accuracy (\%) over 100 seeds (stratified 70/15/15, $N_{\rm test}=116$), noise-free.}\label{tab:repro}
+\begin{tabular}{lrrr}\toprule Setup & Mean & s.d. & Min--max\\\midrule\input{tables/tab_repro}\\\bottomrule\end{tabular}\end{table}
+\begin{figure}[t]\centering\includegraphics[width=.92\textwidth]{figs/fig2_repro.pdf}
+\caption{(a) Test accuracy over 100 random splits for several setups (star: seed 42, used in the earlier version). (b) Distribution for the original setup.}\label{fig:repro}\end{figure}
+
+\subsection{Leakage from neighbouring models}\label{sec:leak}
+Figure~\ref{fig:block} holds out contiguous blocks of increasing length (noise-free, 70/30 split, 15 repetitions). With all six observables ($M,R,f,Q,\tau,h_c$) the MLP accuracy decreases from @@blksixMLP1@@\% (single-model holdout, equivalent to a random split) to @@blksixMLP6@@\% at six-model blocks and @@blksixMLP24@@\% at 24; the random forest drops from @@blksixRF1@@\% to @@blksixRF6@@\% and @@blksixRF24@@\%. With the four plausible observables $\ftau$ the MLP values are @@blkfourMLP1@@\%, @@blkfourMLP6@@\% and @@blkfourMLP24@@\%. A large part of the apparent skill is therefore interpolation between near-duplicate neighbours of the same sequence. $Q$ and $h_c$ are model-derived amplitudes rather than measurable quantities and are not used further.
+\begin{figure}[t]\centering\includegraphics[width=.95\textwidth]{figs/fig3_blocksize.pdf}
+\caption{Noise-free test accuracy versus the length of the held-out contiguous mass block (mean and 95\% $t$-interval over 15 repetitions). Dotted: chance. A block length of one is equivalent to the random split of the earlier version.}\label{fig:block}\end{figure}
+Even with the leakage removed, a single sequence per class cannot say whether the \emph{composition} is identifiable when the EoS is uncertain: ``classifying the family'' and ``recognising one EoS'' are the same task. The remainder of the paper addresses this with populations.
+
+\section{A population of equations of state}\label{sec:pop}
+\subsection{Composition scenarios as EoS populations}
+Each scenario is a family of EoS defined by a small number of parameters with a uniform prior (Table~\ref{tab:priors}); one draw from the prior is one EoS. The families are phenomenological parametrisations \emph{inspired by} the four scenarios of the earlier version, not microphysical calculations.
+\begin{table}[t]\centering\small
+\caption{Parametrisations and priors. PP: piecewise polytrope \citep{Read09} with core break densities $\rho_1=10^{14.7}$ and $\rho_2=10^{15}$\,g\,cm$^{-3}$ on a four-piece crust; CSS: constant speed of sound, $\varepsilon=\varepsilon_0+p/c_s^2$.}\label{tab:priors}
+\begin{tabular}{>{\raggedright\arraybackslash}p{.17\textwidth}p{.75\textwidth}}\toprule
+Scenario & Parameters (uniform priors)\\\midrule
+Nucleonic & PP: $\log_{10}P_1\in[34.15,34.60]$ (dyn\,cm$^{-2}$ at $\rho_1$), $\Gamma_1\in[2.4,3.8]$, $\Gamma_2\in[2.4,3.9]$, $\Gamma_3\in[2.2,3.9]$\\
+Hyperonic-like & PP with $\log_{10}P_1\in[34.20,34.60]$, $\Gamma_1\in[2.6,3.8]$ and a soft segment $\Gamma_2\in[1.8,2.6]$ above $\rho_1\approx2n_0$ (hyperon onset), then a causal CSS segment with $c_s^2\in[0.5,1]$ above $\rho_t=10^{u}$, $u\in[14.95,15.25]$\\
+Strange (self-bound) & CSS with $\varepsilon_0=4B$, $B^{1/4}\in[130,160]$\,MeV, $c_s^2\in[1/3,1]$ ($c_s^2=1/3$ is the MIT bag model)\\
+Dark-matter admixed & nucleonic PP prior plus a self-interacting dark Fermi gas in chemical equilibrium with the baryons (neutron-decay scenario): $m_\chi\in[937.9,939.2]$\,MeV, repulsive self-interaction $G\in[50,500]$\,fm$^2$; effective one-fluid barotrope\\\bottomrule\end{tabular}\end{table}
+Draws are accepted only if they satisfy broad observational and consistency screens: $M_{\max}\ge1.97\,\Msun$, a causal speed of sound ($c_s^2\le1$) up to the centre of the maximum-mass star, $70\le\Lambda_{1.4}\le800$ and $10\le R_{1.4}\le14$\,km. The acceptance rates are @@acc0@@\%, @@acc1@@\%, @@acc2@@\% and @@acc3@@\% for the nucleonic, strange, dark-matter and hyperonic-like priors, so the screens remove most of the prior volume (mainly through $M_{\max}$ and causality, and for strange matter through $\Lambda_{1.4}$ and $R_{1.4}$). Observables are tabulated for stars of $1.2$--$1.9\,\Msun$ and evaluated on a mass grid over $1.2$--$1.85\,\Msun$, where all accepted EoS have stable stars.
+
+The dark-matter-admixed scenario follows the effective-barotrope construction of the earlier work: baryons (nucleonic PP, $\mu_N=(\varepsilon+p)/n_B$) and a dark Fermi gas with $\mu_\chi=\sqrt{m_\chi^2+k_F^2}+\hbar cGn_\chi$ share one chemical potential, and the total pressure and energy density are summed at that potential. Because the dark component appears only above $\mu_N=m_\chi$, the stellar surface is purely baryonic and the dark component is at most a few per cent of the energy density even at the highest densities. By construction this scenario shares the nuclear prior with the nucleonic one, so the question the classifier faces is whether the dark component can be recognised against the spread of nuclear EoS.
+
+\subsection{Solvers and validation}\label{sec:solver}
+\paragraph{TOV and tidal deformability.} Stars are integrated with the Tolman--Oppenheimer--Volkoff equations \citep{Tolman39,OV39} and the tidal-deformability equation \citep{Hinderer08}.
+\paragraph{Full-GR $f$-mode.} The $l=2$ quasi-normal $f$-mode of the non-rotating, barotropic star is computed from the linearised Einstein equations in the Regge--Wheeler gauge. The interior equations were derived symbolically (not taken from the literature) from the linearised Einstein equations and the conservation law, reduced to four first-order equations, and solved with regular boundary conditions at the centre and a vanishing Lagrangian pressure perturbation at the surface; this is the same physical system as the Lindblom--Detweiler formulation \citep{DL85}. The exterior solution is matched to the Zerilli equation \citep{Zerilli70}, and the complex eigenfrequency is the zero of the ingoing-wave amplitude; the real part gives $f$ and the imaginary part $\tau$. The exterior equations were checked against an independent symbolic derivation (residual $10^{-12}$).
+\paragraph{Validation.} The crust is a single calibrated parameter (the absolute pressure scale of a four-piece SLy-like crust, @@valPscale@@ times the electron-gas value), fitted only to the radius and tidal deformability of six published EoS fits at $1.4\,\Msun$ (Table~\ref{tab:valid}); the radii are then reproduced to @@valRmax@@\,km and $\Lambda$ to @@valLmax@@\%. The $f$-mode frequencies were \emph{not} used in any fit, and are reproduced to @@valFmax@@\% (maximum over the six EoS). The reference values are those of the independent finite-EoS pilot of the earlier work (\citealt{HusainPilot}, computed with a separate full-GR solver). In addition, the dark-matter frequency shift at fixed nuclear EoS ($\mathrm{SLy}$, $G=100$\,fm$^2$, $1.4\,\Msun$) is @@valDM100@@\,Hz against @@valDM100ref@@\,Hz in the reference, and a tabulated version of the same EoS agrees with the analytic one to @@valTab@@\% in $f$. Damping times of $@@valTauMin@@$--$@@valTauMax@@$\,s are obtained for the six EoS, as expected for a $1.4\,\Msun$ $f$-mode; no independent reference values for $\tau$ were available.
+\begin{table}[t]\centering\small
+\caption{Validation at $1.4\,\Msun$ against six published piecewise-polytropic EoS fits. $R$ and $\Lambda$ were used to calibrate one crust parameter; $f$ was held out.}\label{tab:valid}
+\begin{tabular}{lrrrrrrrr}\toprule
+EoS & $R$ (km) & $R_{\rm ref}$ & $\Lambda$ & $\Lambda_{\rm ref}$ & $f$ (Hz) & $f_{\rm ref}$ & $\Delta f/f$ (\%) & $\tau$ (s)\\\midrule
+\input{tables/tab_valid}\\\bottomrule\end{tabular}\end{table}
+
+\subsection{The data set}
+Table~\ref{tab:popdata} and Fig.~\ref{fig:pop} summarise the @@nEoS@@ EoS (@@nModes@@ computed modes in total; about @@secEoS@@\,s of computation per EoS). The strange family lies on a distinct $f$--$R$ relation, whereas the nucleonic, dark-matter and hyperonic-like families overlap heavily; the hyperonic-like family extends to higher frequencies.
+\begin{table}[t]\centering\small
+\caption{Population data set (90 EoS per scenario after screening): ranges of $M_{\max}$ ($\Msun$), $R_{1.4}$ (km), $\Lambda_{1.4}$ and $f$ at $1.4\,\Msun$ (Hz).}\label{tab:popdata}
+\begin{tabular}{lrrrrr}\toprule
+Scenario & $N$ & $M_{\max}$ & $R_{1.4}$ & $\Lambda_{1.4}$ & $f_{1.4}$\\\midrule\input{tables/tab_pop_data}\\\bottomrule\end{tabular}\end{table}
+\begin{figure}[t]\centering\includegraphics[width=\textwidth]{figs/figP1_population.pdf}
+\caption{Population data set. (a) Radius and (b) $f$-mode frequency versus mass; lines are medians and bands the 5--95\% range across EoS of each scenario. (c) $f$ versus $R$ at $1.5\,\Msun$, one point per EoS.}\label{fig:pop}\end{figure}
+
+\section{Methods}\label{sec:methods}
+\subsection{Whole-EoS validation}
+Every EoS belongs to exactly one of five folds (stratified by scenario). In each of five rounds one fold is the test set, the next fold is the calibration set and the other three are the training set; no EoS appears in more than one role, so every reported number is for EoS the classifier has never seen. The partition is repeated for three random seeds; we report the mean over folds within a repetition and Student-$t$ 95\% intervals over the three repetitions. Observations are $(M,R,f,\tau)$ at masses drawn uniformly over $1.2$--$1.85\,\Msun$ (a mass prior shared by all classes), with independent noise draws, and classes are balanced (chance 25\%).
+
+\subsection{Observational-error scenarios}\label{sec:errors}
+Observables are perturbed multiplicatively, $x_j^{\rm obs}=x_j(1+\sigma_j\epsilon_j)$, $\epsilon_j\sim\mathcal N(0,1)$ independent.
+\emph{Literature-anchored scenarios:}
+\textbf{NICER-like}: $\sigma_M=10\%$, $\sigma_R=9\%$, no $f$ or $\tau$; these are the 68\% uncertainties of the NICER analyses of PSR J0030+0451 ($M=1.34^{+0.15}_{-0.16}$ and $1.44^{+0.15}_{-0.14}\,\Msun$, $R=12.71^{+1.14}_{-1.19}$ and $13.02^{+1.24}_{-1.06}$\,km; \citealt{Riley19,Miller19}).
+\textbf{NICER-like plus $f$-mode}: in addition $\sigma_f=20\%$, motivated by the forecast that third-generation detectors could measure the $f$-mode frequency of a GW170817-like inspiral to within a few hundred Hz \citep{Williams22}, i.e.\ roughly 10--25\% of $f$.
+\emph{Precision scale:} to show what would be required, the same observables are also evaluated with errors $s\times(5\%,5\%,2\%,20\%)$ in $(M,R,f,\tau)$ for $s\in\{0.25,0.5,1,2,4\}$, and in the noise-free limit. These values are not forecasts for any instrument; they define a scale on which the literature-anchored scenarios can be placed. Three observable sets are used: $\{M,R\}$, $\{M,R,f\}$ and $\{M,R,f,\tau\}$.
+
+\subsection{Classifiers}
+Learners: logistic regression, $k$-nearest neighbours ($k=25$), a random forest (200 trees, minimum leaf 5), histogram gradient boosting, an RBF support-vector machine (8000 training samples) and an MLP deep ensemble \citep{Lakshminarayanan17} of three $2\times64$ ReLU networks (the architecture of the earlier version) on log-transformed, standardised inputs. Training data contain three noise realisations of 33 masses for each training EoS.
+
+\subsection{Kernel-Bayes reference classifier}
+For a reference set of $(\mathrm{EoS},M)$ points the posterior of class $k$ for an observation $\mathbf x^{\rm obs}$ is
+\begin{equation}
+P(k\mid\mathbf x^{\rm obs})\;\propto\;\frac1{N_k}\sum_{i\in k}\prod_j\mathcal N\!\left(x^{\rm obs}_j;\,x_{ij},\,(\sigma_jx_{ij})^2\right),
+\end{equation}
+which is the Bayes-optimal classifier for the stated error model and a uniform prior over the reference EoS and masses. We use the training EoS as reference (the same information as the learners) and, separately, all EoS except the test fold (a larger reference). Unlike the single-sequence oracle of Appendix~\ref{sec:legacynoise}, this is not an upper bound, because the test EoS are not in the reference set; agreement between learners and kernel-Bayes indicates that the remaining error is set by the information in the observables rather than by the learner.
+
+\subsection{Uncertainty quantification}\label{sec:uncmethods}
+\emph{Calibration}: expected calibration error (ECE, 15 bins), negative log-likelihood (NLL) and Brier score, before and after temperature scaling fitted on the calibration EoS. \emph{Epistemic uncertainty}: mutual information across ensemble members. \emph{Conformal prediction}: split conformal prediction with the score $1-\hat p(y\mid x)$ at target miscoverage $\alpha=0.1$ \citep{Vovk05,Angelopoulos23}, calibrated on the calibration EoS with the finite-sample correction applied at the level of EoS (the exchangeable units). The guarantee is marginal.
+
+\section{Results}\label{sec:results}
+\subsection{Noise-free separability of EoS populations}
+Figure~\ref{fig:nf} shows the held-out-EoS accuracy without measurement error, and the left panel of Fig.~\ref{fig:cmpop} the confusion matrix. With $M$ and $R$ only the accuracy is @@nf_MLP-ens_S@@\% (MLP ensemble; logistic regression @@nf_LogReg_S@@\%, random forest @@nf_RandForest_S@@\%); adding the $f$-mode raises it to @@nf_MLP-ens_SF@@\% and adding $\tau$ changes nothing (@@nf_MLP-ens_SO@@\%). All learners agree within a few points. The confusion matrix shows why the ceiling is so low: strange matter is recognised perfectly (@@cm_ALL_0_11@@\%), hyperonic-like matter in @@cm_ALL_0_33@@\% of cases, but nucleonic and dark-matter-admixed stars are assigned to each other almost at random (recall @@cm_ALL_0_00@@\% and @@cm_ALL_0_22@@\%; accuracy between the two classes @@pairNucDM_ALL_0@@\%, chance 50\%). Merging them into one class gives @@merged_ALL_0@@\% three-class accuracy (chance 50\%). The reason is physical: the dark component shifts $f$ by about @@valDM100@@\,Hz (1.3\%) for $G=100$\,fm$^2$ at fixed nuclear EoS (Sec.~\ref{sec:solver}), far less than the spread of $f$ at fixed mass produced by the uncertain nuclear EoS (about $\pm10\%$; Table~\ref{tab:popdata}).
+\begin{figure}[t]\centering\includegraphics[width=.75\textwidth]{figs/figP2_noisefree.pdf}
+\caption{Held-out-EoS accuracy without measurement error for each learner and observable set (95\% $t$-intervals over three repetitions; dotted: chance).}\label{fig:nf}\end{figure}
+
+\subsection{Errors anchored on published measurements}\label{sec:anchored}
+Table~\ref{tab:scen} gives the accuracy under the literature-anchored scenarios and at selected points of the precision scale. With NICER-like errors ($M$ 10\%, $R$ 9\%) the accuracy is @@sc_NICER_mlp@@\% (MLP ensemble; kernel-Bayes @@sc_NICER_bk@@\%), barely above the 25\% chance level; adding a 20\% $f$-mode measurement raises it to @@sc_NICERpf20_mlp@@\%. The three-class accuracy after merging nucleonic and dark-matter-admixed matter is @@merged_NICERpf20@@\%, equal to chance (50\%). Errors of 5\%, 5\% and 2\% in $(M,R,f)$ would give @@pd_SO_1p0_mlp@@\%, and 1.3\%, 1.3\%, 0.5\% would give @@pd_SO_0p25_mlp@@\%, which approaches but never exceeds the noise-free ceiling of @@nf_MLP-ens_ALL@@\%.
+\begin{table}[t]\centering\small
+\caption{Held-out-EoS accuracy (\%, mean $\pm$ 95\% $t$-interval over three repetitions) by error scenario and learner. Chance is 25\%.}\label{tab:scen}
+\begin{tabular}{lccccccc}\toprule
+Scenario & LogReg & $k$-NN & RF & HistGB & SVM & MLP ens. & Kernel Bayes\\\midrule
+\input{tables/tab_pop_scen}\\\bottomrule\end{tabular}\end{table}
+
+\subsection{Precision scale and which observable matters}
+Figure~\ref{fig:dial} shows the accuracy against the precision scale. For the MLP ensemble, $\{M,R\}$ gives @@pd_S_0p25_mlp@@\%, @@pd_S_1p0_mlp@@\% and @@pd_S_4p0_mlp@@\% at $s=0.25$, 1 and 4, whereas $\{M,R,f\}$ gives @@pd_SF_0p25_mlp@@\%, @@pd_SF_1p0_mlp@@\% and @@pd_SF_4p0_mlp@@\%; the damping time with a 20\% error (scaled with $s$) adds nothing within the uncertainty. Learners and kernel-Bayes agree to a few points at every scale (at $s=1$: MLP @@pd_SO_1p0_mlp@@\%, kernel-Bayes @@pd_SO_1p0_bk@@\%, kernel-Bayes with all other EoS as reference @@pd_SO_1p0_bk2@@\%; logistic regression @@pd_SO_1p0_lr@@\%, random forest @@pd_SO_1p0_rf@@\%, gradient boosting @@pd_SO_1p0_hgb@@\%, SVM @@pd_SO_1p0_svm@@\%), so none of the learners leaves information unused and a larger reference sample does not help.
+\begin{figure}[t]\centering\includegraphics[width=\textwidth]{figs/figP3_dial.pdf}
+\caption{Held-out-EoS accuracy versus precision scale $s$ (1 = 5\%, 5\%, 2\%, 20\% in $M,R,f,\tau$) for the MLP ensemble and the kernel-Bayes classifier, for three observable sets (95\% $t$-intervals; dotted: chance). The $\{M,R,f\}$ and $\{M,R,f,\tau\}$ curves coincide.}\label{fig:dial}\end{figure}
+
+\subsection{Degeneracies}
+Figure~\ref{fig:cmpop} shows row-normalised confusion matrices. With accurate $f$ ($s=0.25$) strange matter is still identified perfectly (@@cm_SO_0p25_11@@\%) and the hyperonic-like class in @@cm_SO_0p25_33@@\%, but the nucleonic and dark-matter rows remain mixed (@@cm_SO_0p25_00@@\% and @@cm_SO_0p25_22@@\% correct, @@cm_SO_0p25_02@@\% and @@cm_SO_0p25_20@@\% assigned to each other). With a 20\% $f$-mode error all rows are confused with all columns, strange matter being the best recovered (@@cm_NICERpf20_11@@\%).
+\begin{figure}[t]\centering\includegraphics[width=\textwidth]{figs/figP4_confusion.pdf}
+\caption{Row-normalised confusion matrices (\%) of the temperature-scaled MLP ensemble, pooled over folds and repetitions. Left to right: noise-free, $s=0.25$, and NICER-like errors plus a 20\% $f$-mode measurement.}\label{fig:cmpop}\end{figure}
+
+\subsection{Calibration and prediction sets}
+The probabilities are well calibrated because the learners are close to the information limit (Fig.~\ref{fig:uncpop}a): at $s=1$ the ECE is @@pu_1p0_r_ece@@ for the raw ensemble, @@pu_1p0_t_ece@@ after temperature scaling and @@pu_1p0_b_ece@@ for kernel-Bayes, with NLL @@pu_1p0_t_nll@@ nats for all three (Table~\ref{tab:uncpop}). Conformal sets have empirical coverage between 0.91 and 0.92 at the 0.90 target for every scenario, with the finite-sample correction applied at EoS level. The price of validity is set size: @@pu_NICER_t_setsize@@ of four classes under NICER-like errors, @@pu_NICERpf20_t_setsize@@ when a 20\% $f$-mode is added, @@pu_1p0_t_setsize@@ at $s=1$ and @@pu_0p25_t_setsize@@ at $s=0.25$. Temperature scaling and kernel-Bayes give the same sets. At realistic precision the data therefore support a short list containing most of the classes, not a single label.
+\begin{table}[t]\centering\small
+\caption{Calibration and conformal sets (mean over three repetitions): ECE and NLL (nats) for the raw MLP ensemble, the temperature-scaled ensemble ($+T$) and kernel-Bayes, and coverage and set size (target coverage 0.90).}\label{tab:uncpop}
+\begin{tabular}{lccccccrrrr}\toprule
+ & \multicolumn{3}{c}{ECE} & \multicolumn{3}{c}{NLL} & \multicolumn{2}{c}{MLP $+T$} & \multicolumn{2}{c}{Kernel Bayes}\\\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-9}\cmidrule(lr){10-11}
+Scenario & Raw & $+T$ & KB & Raw & $+T$ & KB & Cov. & Size & Cov. & Size\\\midrule\input{tables/tab_pop_unc}\\\bottomrule\end{tabular}\end{table}
+\begin{figure}[t]\centering\includegraphics[width=\textwidth]{figs/figP5_uncertainty.pdf}
+\caption{(a) Reliability diagram ($s=1$, pooled). (b) Conformal coverage and (c) mean prediction-set size versus precision scale (95\% $t$-intervals).}\label{fig:uncpop}\end{figure}
+
+\section{Discussion and limitations}
+\paragraph{What the results support.} (i) A high accuracy on single-sequence data does not carry over to populations: with whole-EoS hold-out the best achievable accuracy for these four scenarios is about @@nf_MLP-ens_ALL@@\% even without measurement error. (ii) The limit is informational: seven different learners and a kernel-Bayes classifier built on the exact error model agree, so improving the learner cannot help. (iii) With the errors of current X-ray measurements and a plausible third-generation $f$-mode measurement, composition is essentially unidentifiable (@@sc_NICER_mlp@@--@@sc_NICERpf20_mlp@@\% against 25\% chance); an accurate $f$-mode is the observable that would help, and the damping time adds nothing. (iv) Dark-matter-admixed matter is degenerate with nucleonic matter unless the nuclear EoS is known to better than the $\sim1\%$ shift in $f$ that the dark component produces, in line with the EoS-conditional analysis of the earlier pilot. (v) Probabilities and conformal sets are reliable and turn the degeneracy into an explicit statement about which classes remain plausible.
+
+\paragraph{Limitations.}
+\emph{Phenomenological families.} The EoS families are parametrisations with uniform priors, screened by $M_{\max}$, causality, $\Lambda_{1.4}$ and $R_{1.4}$; conclusions depend on these priors. The nucleonic--dark-matter degeneracy in particular follows from the dark-matter scenario sharing the nuclear prior. Microphysical models (for example a population of QMC EoS) would change the priors and might make some classes easier or harder to separate. The hyperonic-like family is a soft-then-stiff parametrisation, not a hyperonic calculation, and the strange family uses a constant speed of sound.
+\emph{Dark matter.} The dark component is treated as an effective one-fluid barotrope in chemical equilibrium; the check against the two-fluid pilot is a single number ($@@valDM100@@$ versus $@@valDM100ref@@$\,Hz). Independent displacement of the two fluids, other dark-sector models and other dark fractions are not explored.
+\emph{Solver.} Non-rotating stars, $l=2$ only, adiabatic perturbations equal to the equilibrium barotrope (no composition gradients, entrainment or crust elasticity); the damping time is not independently validated; the crust has one calibrated parameter.
+\emph{Errors.} Independent multiplicative Gaussian errors are used; the NICER and $f$-mode values are anchored on published results and forecasts for individual sources, not on a population of detections, and systematic theory error and correlated errors are not modelled.
+\emph{Sampling.} 90 EoS per scenario and three fold partitions; a uniform mass prior over $1.2$--$1.85\,\Msun$; conformal coverage is marginal only.
+\emph{Not comparable to earlier data.} The new data come from a new solver and cannot be compared point by point with the single-sequence data set.
+
+\section{Conclusions}
+Evaluated on populations of EoS with whole-EoS hold-out, machine-learning classification of neutron-star composition is far less decisive than the 97\% single-sequence benchmark suggested: the accuracy ceiling is about @@nf_MLP-ens_ALL@@\% even without measurement error, it is set by the information in the observables rather than by the learner, strange matter is the only scenario that is cleanly separable, and nucleonic and dark-matter-admixed matter are not distinguishable when the nuclear EoS is unknown. With errors anchored on current X-ray measurements and a forecast $f$-mode precision the accuracy is @@sc_NICER_mlp@@--@@sc_NICERpf20_mlp@@\%, and calibrated prediction sets contain about @@pu_NICERpf20_t_setsize@@ of four classes.
+
+\section*{Data, code and reproducibility}
+The single-sequence analysis uses \texttt{audit.py}, \texttt{repro.py}, \texttt{blocksize.py}, \texttt{main.py}, \texttt{extrap.py}, \texttt{interp\_check.py} and \texttt{report.py}; the population study uses the solver and generator in \texttt{population/} (\texttt{eos.py}, \texttt{tov.py}, \texttt{fmode2.py}, \texttt{families.py}, \texttt{gen\_pop.py}), the derivation scripts (\texttt{derive\_vac2.py}, \texttt{derive\_matter.py}, \texttt{elim.py}), the experiment (\texttt{pop\_experiment.py}) and the report scripts. The 360 generated EoS and all results are included as JSON/CSV; figures, tables and every number in the text are generated from them. Fixed seeds are used throughout. The environment is Python @@pyver@@ with scikit-learn @@skver@@. The released single-sequence data are at \url{https://github.com/wasif553/ML-NeutronStar-Classification}.
+
+\appendix
+\section{Single-sequence noise study (supplement)}\label{sec:legacynoise}
+This appendix keeps the noise, oracle and uncertainty analysis performed on the single-sequence benchmark, with blocked validation. It is superseded by the population study for questions about composition, but it isolates the effect of measurement error on the original data and provides an exact oracle bound.
+
+\subsection*{Mass regimes, errors, learners, oracle}
+Three mass regimes are used: \textbf{A}, all models ($N=@@nTot@@$); \textbf{B}, $M\ge0.5\,\Msun$ ($N=@@nGe05@@$, with @@nDM05@@ dark-matter models); \textbf{C}, $M\ge1\,\Msun$ ($N=@@nGe1@@$, three classes). Contiguous mass blocks of six models are assigned at random to training (60\%), calibration (20\%) and test (20\%) roles; the analysis is repeated for 10 random assignments. Observables are perturbed as $x_j(1+s\sigma_j\epsilon_j)$ with $(\sigma_M,\sigma_R,\sigma_f,\sigma_\tau)=(5,5,2,20)\%$ at $s=1$. The learner is a three-member MLP ensemble, with logistic regression and a random forest as baselines. The oracle Bayes classifier knows the exact sequences (including the test blocks) and the error model,
+\begin{equation}
+P(k\mid\mathbf x^{\rm obs})\;\propto\;\frac1{N_k}\sum_{i\in k}\;\prod_j \mathcal N\!\left(x^{\rm obs}_j;\,x_{ij},\,(s\sigma_j x_{ij})^2\right),
+\end{equation}
+and is an upper bound for learners trained on finite data.
+
+\subsection*{Results}
+At $s=1$ in regime B the ensemble reaches @@accBSO1p0mlp@@\% with $\ftau$ against an oracle ceiling of @@accBSO1p0orc@@\% (chance 25\%); $M$ and $R$ alone give @@accBS1p0mlp@@\% (oracle @@accBS1p0orc@@\%). In regime C (three classes) the values are @@accCSO1p0mlp@@\% (ensemble) and @@accCSO1p0orc@@\% (oracle). Adding $f$ raises the oracle from @@accBS1p0orc@@\% to @@accBSF1p0orc@@\%; adding a 20\% $\tau$ gives @@accBSO1p0orc@@\%. Strange and hyperonic matter are the most confused pair (@@cmB1_13@@\% of strange models labelled hyperonic and @@cmB1_31@@\% the reverse). The raw ensemble is overconfident (ECE @@uB1p0rece@@, NLL @@uB1p0rnll@@ at $s=1$, regime B; oracle @@uB1p0oece@@, @@uB1p0onll@@); temperature scaling reduces them to @@uB1p0tece@@ and @@uB1p0tnll@@. Conformal sets have about 90\% marginal coverage and contain @@uB1p0tsetsize@@ of four classes at $s=1$ (oracle @@uB1p0osetsize@@). When the heaviest 25\% of each class is withheld, the ensemble reaches @@xSOexacc@@\% (oracle @@xSOorcacc@@\%) and the conformal sets cover only @@xSOexcov@@, since exchangeability fails; the ensemble's mutual information rises from @@xSOinmi@@ to @@xSOexmi@@ nats, an incomplete warning.
+\begin{figure}[t]\centering\includegraphics[width=\textwidth]{figs/fig4_noise.pdf}
+\caption{Single-sequence data: test accuracy versus noise scale $s$ for the MLP ensemble (solid, 95\% $t$-intervals over 10 repetitions) and the oracle Bayes bound (dashed). Dotted: chance.}\label{fig:noise}\end{figure}
+\begin{table}[t]\centering\footnotesize
+\caption{Single-sequence data: test accuracy (\%, mean $\pm$ 95\% $t$-interval over 10 repetitions) by regime, observable set and noise scale $s$. Chance is 25\% (A, B) or 33\% (C).}\label{tab:main}
+\begin{tabular}{llrcccc}\toprule
+Regime & Observables & $s$ & MLP ensemble & Logistic reg. & Random forest & Oracle bound\\\midrule
+\input{tables/tab_main}\\\bottomrule\end{tabular}\end{table}
+\begin{figure}[t]\centering\includegraphics[width=\textwidth]{figs/fig6_uncertainty.pdf}
+\caption{Single-sequence data: (a) reliability diagram (regime B, $s=1$), (b) NLL, (c) conformal coverage versus noise scale.}\label{fig:unc}\end{figure}
+
+\section{Experimental settings}
+\begin{table}[H]\centering\small\caption{Settings.}
+\begin{tabular}{p{.22\textwidth}p{.70\textwidth}}\toprule
+Item & Setting\\\midrule
+Population folds & 5 folds by EoS (stratified), test / calibration / training = 1 / 1 / 3 folds, 3 random partitions\\
+Population samples & training: 33 masses $\times$ 3 noise draws per EoS; calibration: 33 $\times$ 2; test: 33 $\times$ 3 (single draw when noise-free)\\
+MLP & 3 members, $2\times64$ ReLU, Adam, lr $10^{-3}$, $\alpha=10^{-4}$, batch 128, early stopping (max 120 iterations)\\
+Other learners & logistic regression (L2); $k$-NN, $k=25$; random forest, 200 trees, min leaf 5; histogram gradient boosting (150 iterations); RBF SVM, $C=3$, 8000 samples\\
+Kernel Bayes & reference: 22 masses per EoS; training EoS, or all non-test EoS\\
+Conformal & LAC score, $\alpha=0.1$, correction with the number of calibration EoS\\
+Single-sequence study & blocks of six models, 60/20/20, 10 repetitions; 20 noise draws per training model; random forest 150 trees; 15 repetitions for the block-length study, 100 for the random-split replication\\\bottomrule\end{tabular}\end{table}
+
+\section{Changes relative to arXiv:2512.23758v3}\label{sec:changes}
+\begin{table}[H]\centering\small\caption{Statements of the earlier version that are withdrawn or changed.}
+\begin{tabular}{p{.42\textwidth}p{.5\textwidth}}\toprule
+Earlier statement & Status\\\midrule
+Each class is one EoS; the classifier ``separates composition'' & Replaced by populations of EoS with whole-EoS hold-out; the accuracy ceiling is about @@nf_MLP-ens_ALL@@\% and nucleonic and dark-matter-admixed matter are not distinguishable.\\
+$\approx190$ models per class, 770 in total & Total is correct; classes contain 222, 220, 122 and 206 models.\\
+Models span $\sim1\,\Msun$ to the maximum mass & The data span $7\times10^{-8}$ to $2.16\,\Msun$; @@nBelow1pct@@\% have $M<1\,\Msun$.\\
+97.4\% test accuracy & Reproducible (@@reproMean@@\% average over 100 splits) but inflated by neighbouring models; falls to @@blksixMLP6@@--@@blksixMLP24@@\% with six- to 24-model blocks.\\
+Per-class accuracy ranges 82--97\% ``across dataset realizations'' & Not reproduced; removed.\\
+``Mild degradation near the high-mass end'' & Not supported by the earlier figure; removed.\\
+``Not merely overfitting noise'' & The inputs were noise-free; replaced by explicit error scenarios.\\
+Permutation importance shows $f$ and $\tau$ dominate & Replaced by observable-set ablations: $f$ carries the information, $\tau$ adds nothing.\\
+Tabulated redshift used as an input & Inconsistent with $(M,R)$ for two classes; removed.\\
+Oscillation quantities from the earlier code & Population data generated with a new solver validated against six independent $f$-mode frequencies.\\\bottomrule\end{tabular}\end{table}
+
+\begin{thebibliography}{99}\small
+\bibitem[Angelopoulos \& Bates(2023)]{Angelopoulos23} A.~N. Angelopoulos and S. Bates, Found. Trends Mach. Learn. \textbf{16}, 494 (2023) [arXiv:2107.07511].
+\bibitem[Detweiler \& Lindblom(1985)]{DL85} S. Detweiler and L. Lindblom, Astrophys. J. \textbf{292}, 12 (1985).
+\bibitem[Fujimoto et al.(2018)]{Fujimoto18} Y. Fujimoto, K. Fukushima, K. Murase, Phys. Rev. D \textbf{98}, 023019 (2018).
+\bibitem[Hinderer(2008)]{Hinderer08} T. Hinderer, Astrophys. J. \textbf{677}, 1216 (2008).
+\bibitem[Husain et al.(2022)]{Husain22} W. Husain, S. Motta, A.~W. Thomas, arXiv:2203.02758 (2022).
+\bibitem[Husain(2026a)]{HusainOsc} W. Husain, oscillation (f-mode and gravitational-wave) calculations supplying $f,\tau,Q,h_c$ of the single-sequence data set; cited as ``Husain (2026)'' in arXiv:2512.23758v3 (full citation to be completed by the author).
+\bibitem[Husain(2026b)]{HusainPilot} W. Husain, \emph{Testing f-mode information beyond static structure in neutron-decay dark-matter stars: a finite-EoS pilot and working research manuscript}, 15 October 2026 (unpublished working manuscript).
+\bibitem[Lakshminarayanan et al.(2017)]{Lakshminarayanan17} B. Lakshminarayanan, A. Pritzel, C. Blundell, Adv. Neural Inf. Process. Syst. \textbf{30} (2017).
+\bibitem[Lattimer \& Prakash(2004)]{LP04} J.~M. Lattimer and M. Prakash, Science \textbf{304}, 536 (2004).
+\bibitem[Miller et al.(2019)]{Miller19} M.~C. Miller et al., Astrophys. J. Lett. \textbf{887}, L24 (2019).
+\bibitem[Oppenheimer \& Volkoff(1939)]{OV39} J.~R. Oppenheimer and G.~M. Volkoff, Phys. Rev. \textbf{55}, 374 (1939).
+\bibitem[\"Ozel \& Freire(2016)]{OF16} F. \"Ozel and P. Freire, Annu. Rev. Astron. Astrophys. \textbf{54}, 401 (2016).
+\bibitem[Read et al.(2009)]{Read09} J.~S. Read, B.~D. Lackey, B.~J. Owen, J.~L. Friedman, Phys. Rev. D \textbf{79}, 124032 (2009).
+\bibitem[Riley et al.(2019)]{Riley19} T.~E. Riley et al., Astrophys. J. Lett. \textbf{887}, L21 (2019).
+\bibitem[Rikovska Stone et al.(2007)]{Stone07} J. Rikovska Stone, P.~A.~M. Guichon, H.~H. Matevosyan, A.~W. Thomas, Nucl. Phys. A \textbf{792}, 341 (2007).
+\bibitem[Tolman(1939)]{Tolman39} R.~C. Tolman, Phys. Rev. \textbf{55}, 364 (1939).
+\bibitem[Vovk et al.(2005)]{Vovk05} V. Vovk, A. Gammerman, G. Shafer, \emph{Algorithmic Learning in a Random World} (Springer, 2005).
+\bibitem[Williams et al.(2022)]{Williams22} N. Williams, G. Pratten, P. Schmidt, Phys. Rev. D \textbf{105}, 123032 (2022) [arXiv:2203.00623].
+\bibitem[Zerilli(1970)]{Zerilli70} F.~J. Zerilli, Phys. Rev. D \textbf{2}, 2141 (1970).
+\end{thebibliography}
+\end{document}

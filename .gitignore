@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+results/data.pkl
+analysis/results/data.pkl
+*.aux
+*.log
+*.out
