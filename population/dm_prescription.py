@@ -8,7 +8,7 @@ import fmode2 as F
 from fmode import Background
 from pop_data_utils import load_all
 
-M0S = (931.494, 935.0, 938.9)
+M0S = (931.494, 931.192, 935.0, 938.9)
 
 
 def f14(eos, guess):
@@ -40,5 +40,7 @@ if __name__ == "__main__":
     # EoS-by-EoS change relative to the default prescription
     d = np.array([(r["f_938.9"] - r["f_931.494"]) / (r["f_931.494"] - r["f_base"]) for r in res if np.isfinite(r["f_938.9"])])
     summ["rel_change_938.9"] = dict(median=float(np.median(d)), max_abs=float(np.max(abs(d))))
+    d2 = np.array([(r["f_931.192"] - r["f_931.494"]) / (r["f_931.494"] - r["f_base"]) for r in res if np.isfinite(r["f_931.192"])])
+    summ["rel_change_931.192"] = dict(median=float(np.median(d2)), max_abs=float(np.max(abs(d2))))
     json.dump(dict(rows=res, summary=summ), open("results_dm_prescription.json", "w"), indent=1)
     print(summ["rel_change_938.9"])

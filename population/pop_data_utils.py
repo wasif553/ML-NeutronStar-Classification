@@ -14,7 +14,7 @@ def load_all(path=None):
     path = path or POP_DIR
     recs = [json.load(open(f)) for f in sorted(glob.glob(path + "/c*.json"))]
     recs = [r for r in recs if len(r["masses"]) >= 5 and max(r["masses"]) >= M_HI - 1e-9]
-    mchi_max = float(os.environ.get("MCHI_MAX", "inf"))        # optional: restrict the dark-fermion mass (stability window m_chi < m_p + m_e = 938.783 MeV)
+    mchi_max = float(os.environ.get("MCHI_MAX", "938.783"))        # optional: restrict the dark-fermion mass (stability window m_chi < m_p + m_e = 938.783 MeV)
     recs = [r for r in recs if not (r["cls"] == 2 and r["par"].get("mchi", 0) > mchi_max)]
     out = []
     for k in range(4):

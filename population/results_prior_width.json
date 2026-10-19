@@ -4,95 +4,95 @@
   "n_nuc": 90,
   "n_dm": 90,
   "scenario": "noise-free",
-  "LogReg": 0.47205387205387206,
-  "RandForest": 0.5093771043771044
+  "LogReg": 0.44907407407407407,
+  "RandForest": 0.5054377104377105
  },
  {
   "width": 1.0,
   "n_nuc": 90,
   "n_dm": 90,
   "scenario": "s=0.25",
-  "LogReg": 0.48076879910213244,
-  "RandForest": 0.48652637485970823
+  "LogReg": 0.4475476992143658,
+  "RandForest": 0.4936812570145903
  },
  {
   "width": 1.0,
   "n_nuc": 90,
   "n_dm": 90,
   "scenario": "s=1",
-  "LogReg": 0.48758698092031433,
-  "RandForest": 0.49172839506172844
+  "LogReg": 0.45679012345679004,
+  "RandForest": 0.4925589225589226
  },
  {
   "width": 0.9,
   "n_nuc": 58,
-  "n_dm": 63,
+  "n_dm": 59,
   "scenario": "noise-free",
-  "LogReg": 0.4514484848484849,
-  "RandForest": 0.4984171717171717
+  "LogReg": 0.45230895915678526,
+  "RandForest": 0.5108168642951252
  },
  {
   "width": 0.9,
   "n_nuc": 58,
-  "n_dm": 63,
+  "n_dm": 59,
   "scenario": "s=0.25",
-  "LogReg": 0.4853060606060607,
-  "RandForest": 0.4867316498316498
+  "LogReg": 0.46529900453813494,
+  "RandForest": 0.48949970721709846
  },
  {
   "width": 0.9,
   "n_nuc": 58,
-  "n_dm": 63,
+  "n_dm": 59,
   "scenario": "s=1",
-  "LogReg": 0.45913198653198656,
-  "RandForest": 0.478774074074074
+  "LogReg": 0.4580262772654077,
+  "RandForest": 0.48055738544868987
  },
  {
   "width": 0.8,
   "n_nuc": 47,
-  "n_dm": 37,
+  "n_dm": 36,
   "scenario": "noise-free",
-  "LogReg": 0.5477139037433154,
-  "RandForest": 0.5030080213903744
+  "LogReg": 0.5412344028520498,
+  "RandForest": 0.5403721033868092
  },
  {
   "width": 0.8,
   "n_nuc": 47,
-  "n_dm": 37,
+  "n_dm": 36,
   "scenario": "s=0.25",
-  "LogReg": 0.5227413844325608,
-  "RandForest": 0.48090834818776
+  "LogReg": 0.5294919786096257,
+  "RandForest": 0.5144243909685087
  },
  {
   "width": 0.8,
   "n_nuc": 47,
-  "n_dm": 37,
+  "n_dm": 36,
   "scenario": "s=1",
-  "LogReg": 0.5032546048722519,
-  "RandForest": 0.4913294711824124
+  "LogReg": 0.5482092988710636,
+  "RandForest": 0.5088822043969103
  },
  {
   "width": 0.7,
   "n_nuc": 32,
-  "n_dm": 24,
+  "n_dm": 23,
   "scenario": "noise-free",
-  "LogReg": 0.5266069788797061,
-  "RandForest": 0.5592102846648301
+  "LogReg": 0.5082093663911845,
+  "RandForest": 0.6094214876033058
  },
  {
   "width": 0.7,
   "n_nuc": 32,
-  "n_dm": 24,
+  "n_dm": 23,
   "scenario": "s=0.25",
-  "LogReg": 0.50010101010101,
-  "RandForest": 0.49521732476277924
+  "LogReg": 0.5606060606060606,
+  "RandForest": 0.5285583103764921
  },
  {
   "width": 0.7,
   "n_nuc": 32,
-  "n_dm": 24,
+  "n_dm": 23,
   "scenario": "s=1",
-  "LogReg": 0.5285139271502907,
-  "RandForest": 0.49217171717171715
+  "LogReg": 0.541010101010101,
+  "RandForest": 0.49900826446280994
  }
 ]

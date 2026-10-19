@@ -21,13 +21,14 @@ python figs_a.py && python report.py   # figures, tables, results/macros.json
 python build.py paper_final            # needs ../population results copied to results/macros_pop.json, macros_val.json
 ```
 
-`results/macros_pop.json` and `results/macros_val.json` are produced by `../population/pop_report.py` and
-`../population/extra_report.py` (copies are included). Seeds are fixed in every script.
+`results/macros_*.json` are produced by the report scripts in `../population/` (`pop_report.py`, `extra_report.py`,
+`paired_analysis.py`, `robust_report.py`, `robust_report2.py`, `published_tau_comparison.py`; copies are included). Seeds are fixed in every script.
 
 Environment used: Python 3.13, scikit-learn 1.7.2, numpy 2.1.2, pandas 2.2.3, scipy 1.15.2.
 
 ## Open items for the author
 - Complete the `Husain (2026a)` reference (the earlier oscillation code) in `paper_final.tex.in`.
+- Create the release tag named in the paper (`v2.0.0`) and deposit an archived copy (DOI) before submission; the Data/code section of the paper must then give the DOI.
 - The f, tau, Q and h_c values of the single-sequence data were not recomputed; the redshift inconsistency of the
   nucleonic and strange classes should be traced back to the data-generation code.
 - Verify the bibliography entries against the sources.

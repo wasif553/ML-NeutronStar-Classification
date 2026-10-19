@@ -22,11 +22,12 @@ for target_C in (2e-3, 5e-3, 1e-2, 2e-2, 4e-2):
     f_K = om_K / K
     f, tau, w = F.find_mode(bg, f_K * 0.99, 1e6)
     s0 = solve_star(eos, np.exp(lpc), surface_correction=False)
-    out.append(dict(k2_uncorrected=s0["k2"], C=C, f=f, f_Kelvin=f_K, df_rel=f / f_K - 1, k2=s["k2"], k2_newton=0.75, dk2_rel=s["k2"] / 0.75 - 1))
-    print("C=%.4f  f/f_Kelvin-1=%+.4f  k2=%.4f (Newtonian 0.75, %+.4f); without the finite-surface-density correction k2=%.4f" % (C, f / f_K - 1, s["k2"], s["k2"] / 0.75 - 1, s0["k2"]), flush=True)
+    tau_N = 19.53125 * s["R"] ** 4 / s["Mkm"] ** 3 / F.C_KMS          # Newtonian quadrupole-formula damping time of the Kelvin mode (uniform density)
+    out.append(dict(tau=tau, tau_newton=tau_N, dtau_rel=tau / tau_N - 1, k2_uncorrected=s0["k2"], C=C, f=f, f_Kelvin=f_K, df_rel=f / f_K - 1, k2=s["k2"], k2_newton=0.75, dk2_rel=s["k2"] / 0.75 - 1))
+    print("C=%.4f  tau/tau_N-1=%+.4f  f/f_Kelvin-1=%+.4f  k2=%.4f (Newtonian 0.75, %+.4f); without the finite-surface-density correction k2=%.4f" % (C, tau / tau_N - 1, f / f_K - 1, s["k2"], s["k2"] / 0.75 - 1, s0["k2"]), flush=True)
 # linear extrapolation to C -> 0
 C_ = np.array([o["C"] for o in out]); d = np.array([o["df_rel"] for o in out]); dk = np.array([o["dk2_rel"] for o in out])
-pf = np.polyfit(C_, d, 1); pk = np.polyfit(C_, dk, 1)
-res = dict(points=out, f_intercept=float(pf[1]), f_slope=float(pf[0]), k2_intercept=float(pk[1]), k2_slope=float(pk[0]))
-print("extrapolated C->0: f/f_Kelvin - 1 = %+.2e ;  k2/0.75 - 1 = %+.2e" % (pf[1], pk[1]))
+pf = np.polyfit(C_, d, 1); pk = np.polyfit(C_, dk, 1); dt = np.array([o['dtau_rel'] for o in out]); pt = np.polyfit(C_, dt, 1)
+res = dict(tau_intercept=float(pt[1]), tau_slope=float(pt[0]), points=out, f_intercept=float(pf[1]), f_slope=float(pf[0]), k2_intercept=float(pk[1]), k2_slope=float(pk[0]))
+print("extrapolated C->0: tau/tau_N - 1 = %+.2e, slope %+.2f ;  f/f_Kelvin - 1 = %+.2e ;  k2/0.75 - 1 = %+.2e" % (pt[1], pt[0], pf[1], pk[1]))
 json.dump(res, open("results_analytic.json", "w"), indent=1)

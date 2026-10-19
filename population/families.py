@@ -95,7 +95,7 @@ def sample_params(cls, rng):
         return dict(kind="css", B14=rng.uniform(130, 160), cs2=rng.uniform(1 / 3, 1.0))
     if cls == 2:       # neutron-decay dark-matter admixed nucleonic matter
         d = sample_params(0, rng)
-        d.update(kind="dm", G=rng.uniform(50, 500), mchi=rng.uniform(937.9, 939.2))
+        d.update(kind="dm", G=rng.uniform(50, 500), mchi=rng.uniform(937.9, 938.783))
         return d
     raise ValueError(cls)
 

@@ -40,15 +40,17 @@ if os.path.exists("results_frozen.json"):
     M["frDMed"] = f"{100*S['dshift_med']:.3f}"; M["frDMax"] = f"{100*S['dshift_max']:.3f}"; M["frRatio"] = f"{100*S['ratio_med']:.1f}"
 
 # ------------------------------------------------------------------ dark-fermion mass window
-if os.path.exists("results_pop_main_mchi.csv"):
-    Dm = pd.read_csv("results_pop_main_mchi.csv"); Cm = json.load(open("results_pop_conf_mchi.json")); D = pd.read_csv("results_pop_main.csv")
+if os.path.exists("results_pop_main_wide.csv"):
+    Dm = pd.read_csv("results_pop_main_wide.csv"); Cm = json.load(open("results_pop_conf_wide.json"))
     for sc in ("ALL@0", "NICER+f20", "SO@1.0", "SO@0.25"):
         for mo, tg in (("MLP-ens", "mlp"), ("Bayes-kernel", "bk")):
             try:
-                M[f"mchi_{key(sc)}_{tg}"] = f"{100*ci(Dm[(Dm.scen == sc) & (Dm.model == mo)].groupby('rep').acc.mean())[0]:.0f}"
+                M[f"wide_{key(sc)}_{tg}"] = f"{100*ci(Dm[(Dm.scen == sc) & (Dm.model == mo)].groupby('rep').acc.mean())[0]:.0f}"
             except Exception: pass
+    _dm = sorted([r for r in (json.load(open(f)) for f in glob.glob("pop_data/c2_*.json")) if len(r["masses"]) >= 5 and max(r["masses"]) >= 1.85 - 1e-9], key=lambda r: r["idx"])[:90]
+    M["wide_nOut"] = sum(r["par"]["mchi"] > 938.783 for r in _dm); M["wide_nIn"] = 90 - M["wide_nOut"]
     cm = np.sum([np.array(o["cm"]) for o in Cm if o["scen"] == "ALL@0"], 0).astype(float)
-    M["mchi_pair"] = f"{100*(cm[0, 0] + cm[2, 2]) / (cm[0, 0] + cm[0, 2] + cm[2, 0] + cm[2, 2]):.0f}"; M["mchi_strange"] = f"{100*cm[1, 1] / cm[1].sum():.0f}"
+    M["wide_pair"] = f"{100*(cm[0, 0] + cm[2, 2]) / (cm[0, 0] + cm[0, 2] + cm[2, 0] + cm[2, 2]):.0f}"; M["wide_strange"] = f"{100*cm[1, 1] / cm[1].sum():.0f}"
 
 # ------------------------------------------------------------------ EoS-level bootstrap and learning curves
 if os.path.exists("results_stat_robust.json"):

@@ -6,7 +6,7 @@ for f in glob.glob("tables/tab_*.tex"):
     if t.endswith("\\\\"): t = t[:-2].rstrip()
     open(f, "w", encoding="utf-8").write(t)
 M = {}
-for mf in ("results/macros.json", "results/macros_pop.json", "results/macros_val.json", "results/macros_paired.json", "results/macros_robust.json", "results/macros_robust2.json"):
+for mf in ("results/macros.json", "results/macros_pop.json", "results/macros_val.json", "results/macros_paired.json", "results/macros_robust.json", "results/macros_robust2.json", "results/macros_published.json"):
     try: M.update(json.load(open(mf)))
     except FileNotFoundError: pass
 M["pyver"] = platform.python_version(); M["skver"] = sklearn.__version__
