@@ -10,6 +10,7 @@ from sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassif
 from sklearn.svm import SVC
 from pop_data_utils import *
 from unc import *
+from group_conformal import grouped_mondrian
 warnings.filterwarnings("ignore")
 
 RECS = load_all(); CLS, MG, OBS, LAM = tables(RECS)
@@ -78,7 +79,7 @@ def task(scen, rep, fold, seed0=777):
     noise_free = max(sig) == 0
     nd_tr = 1 if noise_free else 3
     Xtr, ytr, _ = draw(tr, np.arange(0, NM, 2), nd_tr, cols, sig, rng)
-    Xca, yca, _ = draw(ca, np.arange(0, NM, 2), 1 if noise_free else 2, cols, sig, rng)
+    Xca, yca, gca = draw(ca, np.arange(0, NM, 2), 1 if noise_free else 2, cols, sig, rng)
     Xte, yte, gte = draw(te, np.arange(0, NM, 2), 1 if noise_free else 3, cols, sig, rng)
     sc = StandardScaler().fit(np.log(Xtr)); T = lambda X: sc.transform(np.log(X))
     rows = []
@@ -93,6 +94,16 @@ def task(scen, rep, fold, seed0=777):
     Tt = fit_T(np.log(np.clip(pc, 1e-12, None)), yca)
     ptT = softmax(np.log(np.clip(pt, 1e-12, None)) / Tt, 1); pcT = softmax(np.log(np.clip(pc, 1e-12, None)) / Tt, 1)
     rows.append({**base, "model": "MLP-ens+T", **metrics(ptT, yte, pcT, yca, NE), "T": Tt})
+    # Proper class-conditional conformal calibration: exactly one independently
+    # selected representative stellar observation per calibration EoS.
+    # This is distinct from the pooled-score, empirically calibrated legacy estimate.
+    group_res = grouped_mondrian(pcT, yca, gca, ptT, yte, alpha=0.10,
+                                  seed=seed0 + 1000 * rep + 20 * fold + zlib.crc32(scen.encode()) % 100000)
+    rows.append({**base, "model": "MLP-ens+T-Mondrian", **metrics(ptT, yte),
+                 "cov": group_res["coverage"], "setsize": group_res["mean_set_size"],
+                 **{f"cov_class_{k}": v for k, v in group_res["coverage_by_class"].items()},
+                 "ncal_min": min(group_res["calibration_eos_per_class"]),
+                 "ncal_max": max(group_res["calibration_eos_per_class"])})
     cm = np.zeros((4, 4), int)
     for a, b in zip(yte, ptT.argmax(1)): cm[a, b] += 1
     rel = {"MLP-ens": reliab(pt, yte), "MLP-ens+T": reliab(ptT, yte)}
