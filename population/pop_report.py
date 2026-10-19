@@ -116,13 +116,16 @@ fig.tight_layout(); fig.savefig("figs/figP4_confusion.pdf"); plt.close()
 # ---------------------------------------------------------------- uncertainty
 U = {}
 cols = ["ece", "nll", "cov", "setsize", "acc"]
+CMAP = {"cov": "cov1", "setsize": "size1"}      # conformal sets: one star per calibration EoS (exchangeable units)
 for fs in ("SO",):
     for s in SC:
         for mo in ("MLP-ens", "MLP-ens+T", "Bayes-kernel"):
-            U[(s, mo)] = {c: rep_means(D, f"{fs}@{s}", mo, c) for c in cols}
+            U[(s, mo)] = {c: rep_means(D, f"{fs}@{s}", mo, CMAP.get(c, c) if mo != "MLP-ens" else c) for c in cols}
+            if mo != "MLP-ens": U[(s, mo)]["covP"] = rep_means(D, f"{fs}@{s}", mo, "cov"); U[(s, mo)]["sizeP"] = rep_means(D, f"{fs}@{s}", mo, "setsize")
 for sc in ("NICER", "NICER+f20"):
     for mo in ("MLP-ens", "MLP-ens+T", "Bayes-kernel"):
-        U[(sc, mo)] = {c: rep_means(D, sc, mo, c) for c in cols}
+        U[(sc, mo)] = {c: rep_means(D, sc, mo, CMAP.get(c, c) if mo != "MLP-ens" else c) for c in cols}
+        if mo != "MLP-ens": U[(sc, mo)]["covP"] = rep_means(D, sc, mo, "cov"); U[(sc, mo)]["sizeP"] = rep_means(D, sc, mo, "setsize")
 rows = []
 for key in ["NICER", "NICER+f20"] + SC:
     e = U
@@ -135,6 +138,8 @@ for key in ["NICER", "NICER+f20", 1.0, 0.25]:
     kk = str(key).replace('+', 'p').replace('.', 'p')
     for mo, tg in (("MLP-ens", "r"), ("MLP-ens+T", "t"), ("Bayes-kernel", "b")):
         for c in cols: mac(f"pu_{kk}_{tg}_{c}", f"{U[(key, mo)][c][0]:.3f}" if c == "ece" else f"{U[(key, mo)][c][0]:.2f}")
+        if mo != "MLP-ens":
+            mac(f"puP_{kk}_{tg}_cov", f"{U[(key, mo)]['covP'][0]:.2f}"); mac(f"puP_{kk}_{tg}_setsize", f"{U[(key, mo)]['sizeP'][0]:.2f}")
 fig, ax = plt.subplots(1, 3, figsize=(10.5, 3.2))
 def pool(model, sc):
     acc = np.zeros((10, 3))

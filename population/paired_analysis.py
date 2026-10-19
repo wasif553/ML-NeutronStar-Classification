@@ -52,5 +52,20 @@ ax[1].axhline(50, c="k", ls=":", lw=1)
 ax[1].set(xscale="log", xlabel=r"$f$-mode error $\sigma_f$ (%)", ylabel="Accuracy, DM vs no DM (%)", title="(b) Known nuclear EoS (paired)")
 ax[1].legend(frameon=False, fontsize=7); ax[1].set_ylim(45, 101)
 fig.tight_layout(); fig.savefig("figs/figP6_paired.pdf"); plt.close()
+# EoS-level bootstrap of the headline paired numbers
+rng = np.random.default_rng(3)
+def sf_at(level, sR, idx):
+    c = np.array([np.mean(norm.cdf(np.sqrt((df[idx] / s) ** 2 + (dR[idx] / sR) ** 2) / 2)) for s in sf])
+    j = np.where(c >= level)[0]
+    return 100 * sf[j[-1]] if len(j) else np.nan
+boots = {(sR, lv): [] for sR in (0.05, 0.01) for lv in (0.75, 0.90)}; med = []
+for _ in range(1000):
+    idx = rng.integers(0, n, n)
+    med.append(100 * np.median(df[idx]))
+    for (sR, lv) in boots: boots[(sR, lv)].append(sf_at(lv, sR, idx))
+for (sR, lv), v in boots.items():
+    lo, hi = np.nanpercentile(v, [2.5, 97.5]); M[f"pairSf_{int(sR*1000)}_{int(lv*100)}_lo"] = f"{lo:.2f}"; M[f"pairSf_{int(sR*1000)}_{int(lv*100)}_hi"] = f"{hi:.2f}"
+M["pairDfMed_lo"], M["pairDfMed_hi"] = [f"{x:.2f}" for x in np.percentile(med, [2.5, 97.5])]
+mc = np.array([p["mchi"] for p in pairs]); M["pairCorrM"] = f"{np.corrcoef(mc, df[:, j14])[0, 1]:.2f}"
 json.dump(M, open("macros_paired.json", "w"), indent=1)
 print(json.dumps(M, indent=1))

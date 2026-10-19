@@ -1,0 +1,98 @@
+[
+ {
+  "width": 1.0,
+  "n_nuc": 90,
+  "n_dm": 90,
+  "scenario": "noise-free",
+  "LogReg": 0.47205387205387206,
+  "RandForest": 0.5093771043771044
+ },
+ {
+  "width": 1.0,
+  "n_nuc": 90,
+  "n_dm": 90,
+  "scenario": "s=0.25",
+  "LogReg": 0.48076879910213244,
+  "RandForest": 0.48652637485970823
+ },
+ {
+  "width": 1.0,
+  "n_nuc": 90,
+  "n_dm": 90,
+  "scenario": "s=1",
+  "LogReg": 0.48758698092031433,
+  "RandForest": 0.49172839506172844
+ },
+ {
+  "width": 0.9,
+  "n_nuc": 58,
+  "n_dm": 63,
+  "scenario": "noise-free",
+  "LogReg": 0.4514484848484849,
+  "RandForest": 0.4984171717171717
+ },
+ {
+  "width": 0.9,
+  "n_nuc": 58,
+  "n_dm": 63,
+  "scenario": "s=0.25",
+  "LogReg": 0.4853060606060607,
+  "RandForest": 0.4867316498316498
+ },
+ {
+  "width": 0.9,
+  "n_nuc": 58,
+  "n_dm": 63,
+  "scenario": "s=1",
+  "LogReg": 0.45913198653198656,
+  "RandForest": 0.478774074074074
+ },
+ {
+  "width": 0.8,
+  "n_nuc": 47,
+  "n_dm": 37,
+  "scenario": "noise-free",
+  "LogReg": 0.5477139037433154,
+  "RandForest": 0.5030080213903744
+ },
+ {
+  "width": 0.8,
+  "n_nuc": 47,
+  "n_dm": 37,
+  "scenario": "s=0.25",
+  "LogReg": 0.5227413844325608,
+  "RandForest": 0.48090834818776
+ },
+ {
+  "width": 0.8,
+  "n_nuc": 47,
+  "n_dm": 37,
+  "scenario": "s=1",
+  "LogReg": 0.5032546048722519,
+  "RandForest": 0.4913294711824124
+ },
+ {
+  "width": 0.7,
+  "n_nuc": 32,
+  "n_dm": 24,
+  "scenario": "noise-free",
+  "LogReg": 0.5266069788797061,
+  "RandForest": 0.5592102846648301
+ },
+ {
+  "width": 0.7,
+  "n_nuc": 32,
+  "n_dm": 24,
+  "scenario": "s=0.25",
+  "LogReg": 0.50010101010101,
+  "RandForest": 0.49521732476277924
+ },
+ {
+  "width": 0.7,
+  "n_nuc": 32,
+  "n_dm": 24,
+  "scenario": "s=1",
+  "LogReg": 0.5285139271502907,
+  "RandForest": 0.49217171717171715
+ }
+]

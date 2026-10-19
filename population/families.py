@@ -46,13 +46,13 @@ def _fermi(k, m):
     return eps, p
 
 
-def dm_admixed(base, G, mchi, rho_max=3.2e15, npts=3000):
+def dm_admixed(base, G, mchi, rho_max=3.2e15, npts=3000, m0_mev=931.494):
     """Barotropic effective EoS of a baryon PP EoS plus a self-interacting dark Fermi gas in chemical equilibrium
     (mu_chi = mu_N): total p(mu) = p_N + p_chi, eps = eps_N + eps_chi (the 'effective one-fluid barotrope')."""
     rho = np.logspace(6, np.log10(rho_max), npts)
     pN = np.array([base.p_of_rho(r_) for r_ in rho]) / P2G                  # dyn/cm^2
     eN = np.array([base.rho_eps_cgs(p_)[1] for p_ in pN])                   # erg/cm^3
-    nB = rho / M0_G / 1e39                                                  # fm^-3
+    nB = rho / (M0_G * m0_mev / 931.494) / 1e39                             # fm^-3 (m0_mev: baryon mass assigned to the fitted barotrope)
     muN = (eN + pN) * ERG_CC_TO_MEV_FM3 / nB                                # MeV
     p_tot = pN * ERG_CC_TO_MEV_FM3
     e_tot = eN * ERG_CC_TO_MEV_FM3

@@ -68,6 +68,19 @@ def mlp(seed): return MLPClassifier((64, 64), alpha=1e-4, batch_size=128, learni
                                     n_iter_no_change=10, random_state=seed)
 
 
+def conf_one(pc, yc, gc, pt, yt, rng, alpha=0.10, ndraw=40):
+    """Split conformal with ONE star per calibration EoS (random mass and noise draw), so the calibration units are
+    (EoS, star) pairs that are exchangeable with a test star drawn the same way; averaged over ndraw random choices."""
+    ids = np.unique(gc); n = len(ids); by = [np.where(gc == g)[0] for g in ids]; cov, size = [], []
+    for _ in range(ndraw):
+        rows = np.array([rng.choice(ix) for ix in by])
+        sc = 1 - pc[rows, yc[rows]]
+        q = np.quantile(sc, min(1, np.ceil((n + 1) * (1 - alpha)) / n), method="higher")
+        sets = pt >= 1 - q
+        cov.append(sets[np.arange(len(yt)), yt].mean()); size.append(sets.sum(1).mean())
+    return float(np.mean(cov)), float(np.mean(size))
+
+
 def task(scen, rep, fold, seed0=777):
     cols, sig = SCEN[scen]
     rng = np.random.default_rng([seed0, rep, fold, zlib.crc32(scen.encode()) % 10_000])
@@ -78,7 +91,7 @@ def task(scen, rep, fold, seed0=777):
     noise_free = max(sig) == 0
     nd_tr = 1 if noise_free else 3
     Xtr, ytr, _ = draw(tr, np.arange(0, NM, 2), nd_tr, cols, sig, rng)
-    Xca, yca, _ = draw(ca, np.arange(0, NM, 2), 1 if noise_free else 2, cols, sig, rng)
+    Xca, yca, gca = draw(ca, np.arange(0, NM, 2), 1 if noise_free else 2, cols, sig, rng)
     Xte, yte, gte = draw(te, np.arange(0, NM, 2), 1 if noise_free else 3, cols, sig, rng)
     sc = StandardScaler().fit(np.log(Xtr)); T = lambda X: sc.transform(np.log(X))
     rows = []
@@ -92,7 +105,9 @@ def task(scen, rep, fold, seed0=777):
     rows.append({**base, "model": "MLP-ens", **r})
     Tt = fit_T(np.log(np.clip(pc, 1e-12, None)), yca)
     ptT = softmax(np.log(np.clip(pt, 1e-12, None)) / Tt, 1); pcT = softmax(np.log(np.clip(pc, 1e-12, None)) / Tt, 1)
-    rows.append({**base, "model": "MLP-ens+T", **metrics(ptT, yte, pcT, yca, NE), "T": Tt})
+    rc = np.random.default_rng([seed0, rep, fold, 31337])
+    rT = metrics(ptT, yte, pcT, yca, NE); rT["cov1"], rT["size1"] = conf_one(pcT, yca, gca, ptT, yte, rc)
+    rows.append({**base, "model": "MLP-ens+T", **rT, "T": Tt})
     cm = np.zeros((4, 4), int)
     for a, b in zip(yte, ptT.argmax(1)): cm[a, b] += 1
     rel = {"MLP-ens": reliab(pt, yte), "MLP-ens+T": reliab(ptT, yte)}
@@ -109,7 +124,8 @@ def task(scen, rep, fold, seed0=777):
     if not noise_free:
         ref_mass = np.arange(0, NM, 3)
         lpt = bayes_kernel(Xte, tr, ref_mass, cols, sig, classes); lpc = bayes_kernel(Xca, tr, ref_mass, cols, sig, classes)
-        rows.append({**base, "model": "Bayes-kernel", **metrics(np.exp(lpt), yte, np.exp(lpc), yca, NE)})
+        rK = metrics(np.exp(lpt), yte, np.exp(lpc), yca, NE); rK["cov1"], rK["size1"] = conf_one(np.exp(lpc), yca, gca, np.exp(lpt), yte, rc)
+        rows.append({**base, "model": "Bayes-kernel", **rK})
         rel["Bayes-kernel"] = reliab(np.exp(lpt), yte)
         # larger reference: every EoS except the test fold
         ref2 = np.where(part != fold)[0]

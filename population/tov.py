@@ -27,7 +27,7 @@ def _rhs_factory(eos):
 RTOL_TOV = 1e-10
 
 
-def solve_star(eos, pc, tidal=True, dense=False, rtol=None):
+def solve_star(eos, pc, tidal=True, dense=False, rtol=None, surface_correction=True):
     rtol = RTOL_TOV if rtol is None else rtol
     """Integrate outward from the centre; returns dict with M [Msun], R [km], Lambda, and (optionally) a dense solution."""
     ec = eos.eps(pc)
@@ -45,7 +45,7 @@ def solve_star(eos, pc, tidal=True, dense=False, rtol=None):
     out = dict(M=M / MSUN_KM, R=R, pc=pc, ec=ec, nuR=nu, Mkm=M, psurf=psurf)
     if tidal:
         es = eos.eps(psurf)
-        yR = y - 4 * np.pi * R ** 3 * es / M if es > 1e-3 * ec * 0 + 1e-30 and es > 1e-8 else y
+        yR = y - 4 * np.pi * R ** 3 * es / M if (surface_correction and es > 1e-8) else y
         # discontinuity correction only matters when eps(surface) is non-negligible (self-bound matter)
         C = M / R
         num = (8 / 5) * C ** 5 * (1 - 2 * C) ** 2 * (2 + 2 * C * (yR - 1) - yR)

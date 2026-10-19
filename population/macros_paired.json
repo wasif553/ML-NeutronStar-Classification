@@ -20,5 +20,16 @@
  "pairAccf_50": "53",
  "pairAccf_10": "65",
  "pairAccf_3": "83",
- "pairCorrG": "-0.95"
+ "pairCorrG": "-0.95",
+ "pairSf_50_75_lo": "0.39",
+ "pairSf_50_75_hi": "0.51",
+ "pairSf_50_90_lo": "0.17",
+ "pairSf_50_90_hi": "0.23",
+ "pairSf_10_75_lo": "0.45",
+ "pairSf_10_75_hi": "0.59",
+ "pairSf_10_90_lo": "0.17",
+ "pairSf_10_90_hi": "0.23",
+ "pairDfMed_lo": "0.49",
+ "pairDfMed_hi": "0.64",
+ "pairCorrM": "-0.12"
 }
