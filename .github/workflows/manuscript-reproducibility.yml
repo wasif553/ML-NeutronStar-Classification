@@ -40,6 +40,9 @@ jobs:
       - name: Audit stellar interior causality across accepted EoS
         working-directory: population
         run: python audit_causality.py
+      - name: Re-evaluate causal-only class-balanced sample
+        working-directory: population
+        run: python causal_filtered_classification.py
       - name: Regenerate canonical manuscript and compile PDF
         working-directory: analysis
         run: |
@@ -68,7 +71,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f analysis/paper_final.pdf population/results_tau_consistency.json population/results_group_mondrian_summary.json population/results_group_mondrian.csv population/results_twofluid_background.json population/results_microphysics_anchor.json population/results_causality_audit.json
+          git add -f analysis/paper_final.pdf population/results_tau_consistency.json population/results_group_mondrian_summary.json population/results_group_mondrian.csv population/results_twofluid_background.json population/results_microphysics_anchor.json population/results_causality_audit.json population/results_causal_filtered_classification.json
           if ! git diff --cached --quiet; then
             git commit -m "chore(paper): refresh compiled PDF and validated group coverage"
             git push origin HEAD:${{ github.ref_name }}
@@ -87,5 +90,6 @@ jobs:
             population/results_twofluid_background.json
             population/results_microphysics_anchor.json
             population/results_causality_audit.json
+            population/results_causal_filtered_classification.json
           if-no-files-found: warn
 
