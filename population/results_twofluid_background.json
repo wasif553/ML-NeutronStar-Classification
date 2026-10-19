@@ -5,108 +5,108 @@
     {
       "eos": "SLy",
       "G_fm2": 100.0,
-      "Mmax_Msun": 2.007467918707135,
-      "reference_onefluid_M": 1.4000000000241404,
-      "reference_onefluid_R": 11.599529478661788,
+      "Mmax_Msun": 2.0074679211288977,
+      "reference_onefluid_M": 1.4000000000601989,
+      "reference_onefluid_R": 11.59952947343099,
       "separate_background": {
-        "R_km": 11.623904226761974,
-        "M_Msun": 1.3999999828548562,
-        "initial_nuclear_pressure": 0.00011655826684481463,
-        "initial_dark_pressure": 2.0455365080861297e-06,
-        "central_nuclear_density_gcc": 903992266643690.2,
-        "dark_central_pressure_fraction": 0.017246803645914455
+        "R_km": 11.59738940376372,
+        "M_Msun": 1.3999999742273914,
+        "initial_nuclear_pressure": 0.00011655826700493116,
+        "initial_dark_pressure": 2.045536511704837e-06,
+        "central_nuclear_density_gcc": 903992267059291.9,
+        "dark_central_pressure_fraction": 0.017246803652615737
       },
-      "delta_M_percent": -1.2263774440413044e-06,
-      "delta_R_percent": 0.2101356623561701
+      "delta_M_percent": -1.845200536809699e-06,
+      "delta_R_percent": -0.01844962480738177
     },
     {
       "eos": "SLy",
       "G_fm2": 300.0,
-      "Mmax_Msun": 2.0341463636855273,
-      "reference_onefluid_M": 1.3999999998757764,
-      "reference_onefluid_R": 11.669163094034642,
+      "Mmax_Msun": 2.034146361030933,
+      "reference_onefluid_M": 1.4000000003941055,
+      "reference_onefluid_R": 11.669163101003525,
       "separate_background": {
-        "R_km": 11.659988510706553,
-        "M_Msun": 1.3999999801810405,
-        "initial_nuclear_pressure": 0.00011414376424272453,
-        "initial_dark_pressure": 6.814423426190147e-07,
-        "central_nuclear_density_gcc": 897681445240208.0,
-        "dark_central_pressure_fraction": 0.005934605849043558
+        "R_km": 11.65999160779837,
+        "M_Msun": 1.3999999799574345,
+        "initial_nuclear_pressure": 0.00011414376419198905,
+        "initial_dark_pressure": 6.814423422310109e-07,
+        "central_nuclear_density_gcc": 897681445106671.1,
+        "dark_central_pressure_fraction": 0.005934605848306733
       },
-      "delta_M_percent": -1.406766847455998e-06,
-      "delta_R_percent": -0.07862246207510637
+      "delta_M_percent": -1.4597622111089947e-06,
+      "delta_R_percent": -0.07859598092656572
     },
     {
       "eos": "AP4",
       "G_fm2": 100.0,
-      "Mmax_Msun": 2.135155555987587,
-      "reference_onefluid_M": 1.3999999990768195,
-      "reference_onefluid_R": 11.227428886931124,
+      "Mmax_Msun": 2.1351555567269096,
+      "reference_onefluid_M": 1.400000001219838,
+      "reference_onefluid_R": 11.227428897970457,
       "separate_background": {
-        "R_km": 11.236443503846674,
-        "M_Msun": 1.4000003681685473,
-        "initial_nuclear_pressure": 0.00012687230744028665,
-        "initial_dark_pressure": 2.122309858036042e-06,
-        "central_nuclear_density_gcc": 925238465572763.4,
-        "dark_central_pressure_fraction": 0.016452700914859324
+        "R_km": 11.23642227302276,
+        "M_Msun": 1.4000003689929301,
+        "initial_nuclear_pressure": 0.00012687230760659573,
+        "initial_dark_pressure": 2.1223098617767263e-06,
+        "central_nuclear_density_gcc": 925238465924820.9,
+        "dark_central_pressure_fraction": 0.01645270092216898
       },
-      "delta_M_percent": 2.6363694871633925e-05,
-      "delta_R_percent": 0.08029101770614666
+      "delta_M_percent": 2.6269506570031353e-05,
+      "delta_R_percent": 0.08010182147693001
     },
     {
       "eos": "AP4",
       "G_fm2": 300.0,
-      "Mmax_Msun": 2.169472939824737,
-      "reference_onefluid_M": 1.4000000000112909,
-      "reference_onefluid_R": 11.287749038195694,
+      "Mmax_Msun": 2.169472931478171,
+      "reference_onefluid_M": 1.3999999999886739,
+      "reference_onefluid_R": 11.28774903765133,
       "separate_background": {
-        "R_km": 11.30882449856004,
-        "M_Msun": 1.4000003832126762,
-        "initial_nuclear_pressure": 0.0001245783500776582,
-        "initial_dark_pressure": 7.08613122833809e-07,
-        "central_nuclear_density_gcc": 920350935297642.1,
-        "dark_central_pressure_fraction": 0.005655920653929827
+        "R_km": 11.307569552253078,
+        "M_Msun": 1.4000003838690582,
+        "initial_nuclear_pressure": 0.00012457835007888556,
+        "initial_dark_pressure": 7.086131228430441e-07,
+        "central_nuclear_density_gcc": 920350935300274.1,
+        "dark_central_pressure_fraction": 0.0056559206539477155
       },
-      "delta_M_percent": 2.7371527511199645e-05,
-      "delta_R_percent": 0.1867109225500263
+      "delta_M_percent": 2.742002744859917e-05,
+      "delta_R_percent": 0.1755931544511924
     },
     {
       "eos": "MPA1",
       "G_fm2": 100.0,
-      "Mmax_Msun": 2.3872576426160066,
-      "reference_onefluid_M": 1.4000000010685039,
-      "reference_onefluid_R": 12.330384532176604,
+      "Mmax_Msun": 2.3872576625779853,
+      "reference_onefluid_M": 1.4000000000974238,
+      "reference_onefluid_R": 12.330384517531636,
       "separate_background": {
-        "R_km": 12.355943340126094,
-        "M_Msun": 1.40000030063237,
-        "initial_nuclear_pressure": 7.852333705486551e-05,
-        "initial_dark_pressure": 1.4358464458085144e-06,
-        "central_nuclear_density_gcc": 684200842561487.6,
-        "dark_central_pressure_fraction": 0.01795724246979599
+        "R_km": 12.319713608588634,
+        "M_Msun": 1.4000003167003383,
+        "initial_nuclear_pressure": 7.852333711692534e-05,
+        "initial_dark_pressure": 1.435846447359752e-06,
+        "central_nuclear_density_gcc": 684200842712873.0,
+        "dark_central_pressure_fraction": 0.017957242474910578
       },
-      "delta_M_percent": 2.1397418992208372e-05,
-      "delta_R_percent": 0.20728313770583817
+      "delta_M_percent": 2.2614493899730803e-05,
+      "delta_R_percent": -0.08654157482136382
     },
     {
       "eos": "MPA1",
       "G_fm2": 300.0,
-      "Mmax_Msun": 2.432121626486421,
-      "reference_onefluid_M": 1.4000000001365895,
-      "reference_onefluid_R": 12.398321973594294,
+      "Mmax_Msun": 2.432121616787713,
+      "reference_onefluid_M": 1.4000000002204325,
+      "reference_onefluid_R": 12.398321966148774,
       "separate_background": {
-        "R_km": 12.39622415407646,
-        "M_Msun": 1.400000318999382,
-        "initial_nuclear_pressure": 7.714316083957609e-05,
-        "initial_dark_pressure": 4.8038896914842e-07,
-        "central_nuclear_density_gcc": 680812593331554.6,
-        "dark_central_pressure_fraction": 0.006188701371325672
+        "R_km": 12.39546341916134,
+        "M_Msun": 1.4000003176146179,
+        "initial_nuclear_pressure": 7.71431609752776e-05,
+        "initial_dark_pressure": 4.803889702972868e-07,
+        "central_nuclear_density_gcc": 680812593666831.4,
+        "dark_central_pressure_fraction": 0.006188701375215479
       },
-      "delta_M_percent": 2.2775913732786535e-05,
-      "delta_R_percent": -0.016920189057045842
+      "delta_M_percent": 2.2671013244490723e-05,
+      "delta_R_percent": -0.023055918335068704
     }
   ],
   "summary": {
     "n": 6,
-    "max_absolute_background_discrepancy_percent": 0.2101356623561701
+    "max_absolute_background_discrepancy_percent": 0.1755931544511924
   }
 }
