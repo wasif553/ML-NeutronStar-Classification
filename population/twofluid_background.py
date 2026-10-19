@@ -62,15 +62,24 @@ def integrate_separately(base,g,pc_tot):
     ngrid=np.geomspace(1e-2,350,3000)
     pair=np.asarray([dark_at_k(k,g)[:2] for k in ngrid])
     pp,ee=pair[:,0],pair[:,1]
-    mask=(pp>0)&(ee>0)
-    interp=PchipInterpolator(np.log(pp[mask]),np.log(ee[mask]),extrapolate=False)
+    mask=(pp>0)&(ee>0)&np.isfinite(pp)&np.isfinite(ee)
+    # Tiny pressure roundoff from the relativistic Fermi integrals can
+    # generate duplicate or nonmonotonic abscissae near k=0.
+    order=np.argsort(pp[mask])
+    pp_sort=pp[mask][order]
+    ee_sort=ee[mask][order]
+    p_unique,first=np.unique(pp_sort,return_index=True)
+    e_unique=ee_sort[first]
+    if len(p_unique)<20 or not np.all(np.diff(p_unique)>0):
+        raise RuntimeError("invalid dark-fluid pressure tabulation")
+    interp=PchipInterpolator(np.log(p_unique),np.log(e_unique),extrapolate=False)
 
     def edark(p):
         if p<=0:return 0.
-        if p < pp[mask][0]:
+        if p < p_unique[0]:
             # low-density asymptotic eps proportional to p^(3/5)
-            return ee[mask][0]*(p/pp[mask][0])**(3/5)
-        if p>pp[mask][-1]:
+            return e_unique[0]*(p/p_unique[0])**(3/5)
+        if p>p_unique[-1]:
             raise ValueError("dark pressure above interpolation interval")
         return float(np.exp(interp(np.log(p))))
 
