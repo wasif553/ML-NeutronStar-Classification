@@ -1,0 +1,112 @@
+{
+  "schema": "two-fluid-hydrostatic-v1",
+  "explanation": "Independently integrate two-fluid hydrostatic backgrounds and compare to\nthe equilibrium effective-barotrope TOV construction.\n\nImportant: this validates BACKGROUND hydrostatic modelling only. There is\nno relative-displacement perturbation eigenvalue calculation here.\n",
+  "runs": [
+    {
+      "eos": "SLy",
+      "G_fm2": 100.0,
+      "Mmax_Msun": 2.007467918707135,
+      "reference_onefluid_M": 1.4000000000241404,
+      "reference_onefluid_R": 11.599529478661788,
+      "separate_background": {
+        "R_km": 11.623904226761974,
+        "M_Msun": 1.3999999828548562,
+        "initial_nuclear_pressure": 0.00011655826684481463,
+        "initial_dark_pressure": 2.0455365080861297e-06,
+        "central_nuclear_density_gcc": 903992266643690.2,
+        "dark_central_pressure_fraction": 0.017246803645914455
+      },
+      "delta_M_percent": -1.2263774440413044e-06,
+      "delta_R_percent": 0.2101356623561701
+    },
+    {
+      "eos": "SLy",
+      "G_fm2": 300.0,
+      "Mmax_Msun": 2.0341463636855273,
+      "reference_onefluid_M": 1.3999999998757764,
+      "reference_onefluid_R": 11.669163094034642,
+      "separate_background": {
+        "R_km": 11.659988510706553,
+        "M_Msun": 1.3999999801810405,
+        "initial_nuclear_pressure": 0.00011414376424272453,
+        "initial_dark_pressure": 6.814423426190147e-07,
+        "central_nuclear_density_gcc": 897681445240208.0,
+        "dark_central_pressure_fraction": 0.005934605849043558
+      },
+      "delta_M_percent": -1.406766847455998e-06,
+      "delta_R_percent": -0.07862246207510637
+    },
+    {
+      "eos": "AP4",
+      "G_fm2": 100.0,
+      "Mmax_Msun": 2.135155555987587,
+      "reference_onefluid_M": 1.3999999990768195,
+      "reference_onefluid_R": 11.227428886931124,
+      "separate_background": {
+        "R_km": 11.236443503846674,
+        "M_Msun": 1.4000003681685473,
+        "initial_nuclear_pressure": 0.00012687230744028665,
+        "initial_dark_pressure": 2.122309858036042e-06,
+        "central_nuclear_density_gcc": 925238465572763.4,
+        "dark_central_pressure_fraction": 0.016452700914859324
+      },
+      "delta_M_percent": 2.6363694871633925e-05,
+      "delta_R_percent": 0.08029101770614666
+    },
+    {
+      "eos": "AP4",
+      "G_fm2": 300.0,
+      "Mmax_Msun": 2.169472939824737,
+      "reference_onefluid_M": 1.4000000000112909,
+      "reference_onefluid_R": 11.287749038195694,
+      "separate_background": {
+        "R_km": 11.30882449856004,
+        "M_Msun": 1.4000003832126762,
+        "initial_nuclear_pressure": 0.0001245783500776582,
+        "initial_dark_pressure": 7.08613122833809e-07,
+        "central_nuclear_density_gcc": 920350935297642.1,
+        "dark_central_pressure_fraction": 0.005655920653929827
+      },
+      "delta_M_percent": 2.7371527511199645e-05,
+      "delta_R_percent": 0.1867109225500263
+    },
+    {
+      "eos": "MPA1",
+      "G_fm2": 100.0,
+      "Mmax_Msun": 2.3872576426160066,
+      "reference_onefluid_M": 1.4000000010685039,
+      "reference_onefluid_R": 12.330384532176604,
+      "separate_background": {
+        "R_km": 12.355943340126094,
+        "M_Msun": 1.40000030063237,
+        "initial_nuclear_pressure": 7.852333705486551e-05,
+        "initial_dark_pressure": 1.4358464458085144e-06,
+        "central_nuclear_density_gcc": 684200842561487.6,
+        "dark_central_pressure_fraction": 0.01795724246979599
+      },
+      "delta_M_percent": 2.1397418992208372e-05,
+      "delta_R_percent": 0.20728313770583817
+    },
+    {
+      "eos": "MPA1",
+      "G_fm2": 300.0,
+      "Mmax_Msun": 2.432121626486421,
+      "reference_onefluid_M": 1.4000000001365895,
+      "reference_onefluid_R": 12.398321973594294,
+      "separate_background": {
+        "R_km": 12.39622415407646,
+        "M_Msun": 1.400000318999382,
+        "initial_nuclear_pressure": 7.714316083957609e-05,
+        "initial_dark_pressure": 4.8038896914842e-07,
+        "central_nuclear_density_gcc": 680812593331554.6,
+        "dark_central_pressure_fraction": 0.006188701371325672
+      },
+      "delta_M_percent": 2.2775913732786535e-05,
+      "delta_R_percent": -0.016920189057045842
+    }
+  ],
+  "summary": {
+    "n": 6,
+    "max_absolute_background_discrepancy_percent": 0.2101356623561701
+  }
+}

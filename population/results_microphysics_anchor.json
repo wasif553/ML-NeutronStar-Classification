@@ -1,0 +1,265 @@
+{
+  "schema": "microphysics-anchor-v1",
+  "description": "Independent-nuclear-EoS stress test for the f-mode DM shift.\n\nThese are six externally published *piecewise-polytropic representations* of\nmicrophysical nuclear EoSs, not a fresh ensemble of microscopic QMC solutions.\nThe perturbative solver and the DM transformation are the ones used elsewhere\nin this repository: this test explores sensitivity to the nuclear baseline,\nnot independence of the oscillation implementation.\n\nRun: cd population && python microphysics_anchor.py [jobs]\n",
+  "base": {
+    "SLy": {
+      "R": 11.705508204503252,
+      "Lambda": 295.48688678845696,
+      "f": 1935.1985305204519,
+      "tau": 0.1920034858781449
+    },
+    "AP3": {
+      "R": 11.971240728972417,
+      "Lambda": 367.0780590201718,
+      "f": 1848.508910986613,
+      "tau": 0.20943041064532533
+    },
+    "AP4": {
+      "R": 11.319226679485483,
+      "Lambda": 247.4988913236745,
+      "f": 2007.6250986228606,
+      "tau": 0.17927391086396605
+    },
+    "ENG": {
+      "R": 11.969513402325687,
+      "Lambda": 369.8887020075006,
+      "f": 1845.6489569842417,
+      "tau": 0.21000824562419962
+    },
+    "MPA1": {
+      "R": 12.43391495809553,
+      "Lambda": 478.92135753485695,
+      "f": 1745.6800371086745,
+      "tau": 0.23413954817654198
+    },
+    "WFF2": {
+      "R": 11.12450697849959,
+      "Lambda": 224.88597092235665,
+      "f": 2047.4674223907625,
+      "tau": 0.1729228578813333
+    }
+  },
+  "runs": [
+    {
+      "eos": "AP3",
+      "G_fm2": 100.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.3004792239378937,
+      "supports_1p97": true,
+      "R_km": 11.87306346908524,
+      "Lambda": 346.627024630198,
+      "f_Hz": 1870.665767224347,
+      "tau_s": 0.20480063102643148,
+      "df_Hz": 22.15685623773402,
+      "df_percent": 1.19863399662532,
+      "dR_percent": -0.8201093112226165,
+      "dLambda_percent": -5.571303946785333
+    },
+    {
+      "eos": "AP3",
+      "G_fm2": 300.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.3427314338776135,
+      "supports_1p97": true,
+      "R_km": 11.93751848039345,
+      "Lambda": 359.8781786924291,
+      "f_Hz": 1855.8090513495654,
+      "tau_s": 0.20795607790062515,
+      "df_Hz": 7.300140362952334,
+      "df_percent": 0.39492048534708335,
+      "dR_percent": -0.2816938472998243,
+      "dLambda_percent": -1.961403072404011
+    },
+    {
+      "eos": "AP4",
+      "G_fm2": 100.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.135155555987587,
+      "supports_1p97": true,
+      "R_km": 11.227428886931124,
+      "Lambda": 233.63695076535944,
+      "f_Hz": 2031.1373296708666,
+      "tau_s": 0.1755583743279598,
+      "df_Hz": 23.512231048006015,
+      "df_percent": 1.1711464986233988,
+      "dR_percent": -0.8109899656018937,
+      "dLambda_percent": -5.600809152791997
+    },
+    {
+      "eos": "AP4",
+      "G_fm2": 300.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.169472939824737,
+      "supports_1p97": true,
+      "R_km": 11.287749038195694,
+      "Lambda": 242.643015426064,
+      "f_Hz": 2015.420211948609,
+      "tau_s": 0.17807384532934753,
+      "df_Hz": 7.795113325748389,
+      "df_percent": 0.38827534737913005,
+      "dR_percent": -0.2780900337196912,
+      "dLambda_percent": -1.9619788483254519
+    },
+    {
+      "eos": "ENG",
+      "G_fm2": 100.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.183216695750677,
+      "supports_1p97": true,
+      "R_km": 11.868079849545865,
+      "Lambda": 348.2314833434787,
+      "f_Hz": 1868.9494512907568,
+      "tau_s": 0.20512206343141284,
+      "df_Hz": 23.30049430651502,
+      "df_percent": 1.2624553666255034,
+      "dR_percent": -0.8474325511019787,
+      "dLambda_percent": -5.855063576281583
+    },
+    {
+      "eos": "ENG",
+      "G_fm2": 300.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.2188347314462917,
+      "supports_1p97": true,
+      "R_km": 11.934700881937353,
+      "Lambda": 362.261449821415,
+      "f_Hz": 1853.318850959668,
+      "tau_s": 0.20845266199393225,
+      "df_Hz": 7.669893975426248,
+      "df_percent": 0.4155662400697757,
+      "dR_percent": -0.290843238302152,
+      "dLambda_percent": -2.0620397824237857
+    },
+    {
+      "eos": "MPA1",
+      "G_fm2": 100.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.3872576426160066,
+      "supports_1p97": true,
+      "R_km": 12.330384532176604,
+      "Lambda": 452.01352369738123,
+      "f_Hz": 1767.183688511562,
+      "tau_s": 0.2286879637498902,
+      "df_Hz": 21.5036514028875,
+      "df_percent": 1.2318208919031681,
+      "dR_percent": -0.832645440055213,
+      "dLambda_percent": -5.618424280758305
+    },
+    {
+      "eos": "MPA1",
+      "G_fm2": 300.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.432121626486421,
+      "supports_1p97": true,
+      "R_km": 12.398321973594294,
+      "Lambda": 469.42177409270664,
+      "f_Hz": 1752.745951491099,
+      "tau_s": 0.23241136594955572,
+      "df_Hz": 7.06591438242458,
+      "df_percent": 0.4047657206487587,
+      "dR_percent": -0.28625726186153333,
+      "dLambda_percent": -1.9835372327196565
+    },
+    {
+      "eos": "SLy",
+      "G_fm2": 100.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.007467918707135,
+      "supports_1p97": true,
+      "R_km": 11.599529478661788,
+      "Lambda": 277.16701539077127,
+      "f_Hz": 1960.8561926727325,
+      "tau_s": 0.18740036977209593,
+      "df_Hz": 25.657662152280636,
+      "df_percent": 1.3258413412178482,
+      "dR_percent": -0.9053748371274706,
+      "dLambda_percent": -6.19989319891584
+    },
+    {
+      "eos": "SLy",
+      "G_fm2": 300.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.0341463636855273,
+      "supports_1p97": true,
+      "R_km": 11.669163094034642,
+      "Lambda": 289.0701222580314,
+      "f_Hz": 1943.7475100715087,
+      "tau_s": 0.1904907963425341,
+      "df_Hz": 8.548979551056846,
+      "df_percent": 0.44176240402362676,
+      "dR_percent": -0.31049579252464543,
+      "dLambda_percent": -2.171590286177205
+    },
+    {
+      "eos": "WFF2",
+      "G_fm2": 100.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.1399647985118317,
+      "supports_1p97": true,
+      "R_km": 11.036774384691872,
+      "Lambda": 212.49324950962267,
+      "f_Hz": 2070.888140416448,
+      "tau_s": 0.1694569030580795,
+      "df_Hz": 23.420718025685574,
+      "df_percent": 1.1438872125417276,
+      "dR_percent": -0.7886425346963932,
+      "dLambda_percent": -5.510668967880017
+    },
+    {
+      "eos": "WFF2",
+      "G_fm2": 300.0,
+      "mchi_MeV": 938.0,
+      "M_Msun": 1.4,
+      "Mmax_Msun": 2.1753207416871,
+      "supports_1p97": true,
+      "R_km": 11.094438827448686,
+      "Lambda": 220.55222948158715,
+      "f_Hz": 2055.2517389371824,
+      "tau_s": 0.17179666812921743,
+      "df_Hz": 7.784316546419859,
+      "df_percent": 0.3801924495252962,
+      "dR_percent": -0.27028749327063784,
+      "dLambda_percent": -1.9270839452523059
+    }
+  ],
+  "summary": {
+    "nuclear_baselines": 6,
+    "number_of_admixed_modes": 12,
+    "f_nuclear_range_Hz": [
+      1745.6800371086745,
+      2047.4674223907625
+    ],
+    "f_nuclear_spread_Hz": 301.78738528208805,
+    "shift_by_G": {
+      "100": {
+        "n": 6,
+        "median_percent": 1.2152274442642441,
+        "range_percent": [
+          1.1438872125417276,
+          1.3258413412178482
+        ],
+        "viable_Mmax_count": 6
+      },
+      "300": {
+        "n": 6,
+        "median_percent": 0.39984310299792103,
+        "range_percent": [
+          0.3801924495252962,
+          0.44176240402362676
+        ],
+        "viable_Mmax_count": 6
+      }
+    }
+  }
+}
