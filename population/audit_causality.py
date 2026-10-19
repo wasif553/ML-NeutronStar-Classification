@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import numpy as np
 from families import build, max_mass
+import families_b
 from pop_data_utils import load_all
 
 OUT=Path(__file__).with_name("results_causality_audit.json")
@@ -23,7 +24,7 @@ def main():
             c=r["cls"]
             counts[c]=counts.get(c,0)+1
             if counts[c]>limit:continue
-            eos=build(r["par"])
+            eos=(build if directory=="pop_data" else families_b.build)(r["par"])
             maxm,lpmax=max_mass(eos)
             center=np.exp(lpmax)
             psurf=eos.p_surface()
