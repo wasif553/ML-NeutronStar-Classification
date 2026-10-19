@@ -1,0 +1,34 @@
+[
+  {
+    "scenario": "NICER+f20",
+    "replications": 3,
+    "folds_per_rep": 5,
+    "mean_coverage": 0.9480265619154509,
+    "mean_set_size": 3.4916292555181436,
+    "minimum_class_coverage_across_folds": 0.7744107744107744,
+    "calibration_eos_per_class": [
+      18,
+      18
+    ],
+    "coverage_class_0": 0.9487093153759819,
+    "coverage_class_1": 0.9527497194163862,
+    "coverage_class_2": 0.9384212495323607,
+    "coverage_class_3": 0.9522259633370744
+  },
+  {
+    "scenario": "SO@1.0",
+    "replications": 3,
+    "folds_per_rep": 5,
+    "mean_coverage": 0.9441825664047888,
+    "mean_set_size": 2.546979049756828,
+    "minimum_class_coverage_across_folds": 0.7053872053872053,
+    "calibration_eos_per_class": [
+      18,
+      18
+    ],
+    "coverage_class_0": 0.9349046015712682,
+    "coverage_class_1": 0.9588477366255145,
+    "coverage_class_2": 0.9409652076318743,
+    "coverage_class_3": 0.9420127197904976
+  }
+]

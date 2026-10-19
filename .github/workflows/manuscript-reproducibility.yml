@@ -1,0 +1,79 @@
+name: Research manuscript reproducibility
+on:
+  push:
+    branches:
+      - paper/referee-revision-2026-10-19
+  workflow_dispatch:
+
+concurrency:
+  group: research-manuscript-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  reproduce-paper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install python and LaTeX dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended poppler-utils
+          python -m pip install -U pip
+          python -m pip install -r requirements.txt scipy sympy joblib
+      - name: EoS-group calibration smoke test
+        run: python population/group_conformal.py
+      - name: Independent damping-time empirical check
+        run: python population/tau_consistency.py
+      - name: Regenerate canonical manuscript and compile PDF
+        working-directory: analysis
+        run: |
+          python build.py paper_final
+          test -s paper_final.pdf
+          pdfinfo paper_final.pdf | grep -E 'Pages:|File size:'
+          test $(grep -c 'missing macros:' paper_final.log || true) -eq 0
+      - name: Validate population manuscript claims
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          src = Path('analysis/paper_final.tex').read_text()
+          assert '@@' not in src
+          assert 'finite-sample split-conformal guarantee' in src
+          assert '938.783' in src
+          assert 'Phys. Dark Universe' in src
+          assert '3\\times10^{-8}' in src
+          print('Scientific manuscript source checks passed')
+          PY
+      - name: Group-aware class-conditional coverage for existing EoS
+        working-directory: population
+        run: |
+          python run_group_calibration.py NICER+f20,SO@1.0 2 3
+      - name: Commit reproducible PDF and validation outputs to review branch
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f analysis/paper_final.pdf population/results_tau_consistency.json population/results_group_mondrian_summary.json population/results_group_mondrian.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(paper): refresh compiled PDF and validated group coverage"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
+      - name: Upload paper and validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: revised-manuscript-and-evidence
+          path: |
+            analysis/paper_final.pdf
+            analysis/paper_final.tex
+            population/results_tau_consistency.json
+            population/results_group_mondrian.csv
+            population/results_group_mondrian_summary.json
+          if-no-files-found: warn
+
