@@ -1,0 +1,57 @@
+{
+  "source": "https://doi.org/10.1103/PhysRevD.70.124015",
+  "note": "Independent empirical-relation comparison, NOT stellar eigenvalue validation.",
+  "n": 6,
+  "max_abs_percent": 9.57180503362045,
+  "median_abs_percent": 8.700928607910129,
+  "rows": [
+    {
+      "eos": "SLy",
+      "M_Msun": 1.4,
+      "R_km": 11.705508204503252,
+      "tau_solver_s": 0.1920034858781449,
+      "tau_empirical_s": 0.1811049775191134,
+      "signed_residual_percent": 6.017785103604512
+    },
+    {
+      "eos": "AP3",
+      "M_Msun": 1.4,
+      "R_km": 11.971240728972417,
+      "tau_solver_s": 0.20943041064532533,
+      "tau_empirical_s": 0.19288336731205266,
+      "signed_residual_percent": 8.578781863810136
+    },
+    {
+      "eos": "AP4",
+      "M_Msun": 1.4,
+      "R_km": 11.319226679485483,
+      "tau_solver_s": 0.17927391086396605,
+      "tau_empirical_s": 0.16525266281336418,
+      "signed_residual_percent": 8.484733505588004
+    },
+    {
+      "eos": "ENG",
+      "M_Msun": 1.4,
+      "R_km": 11.969513402325687,
+      "tau_solver_s": 0.21000824562419962,
+      "tau_empirical_s": 0.1928044560407698,
+      "signed_residual_percent": 8.922921148560992
+    },
+    {
+      "eos": "MPA1",
+      "M_Msun": 1.4,
+      "R_km": 12.43391495809553,
+      "tau_solver_s": 0.23413954817654198,
+      "tau_empirical_s": 0.21515615821292544,
+      "signed_residual_percent": 8.823075352010123
+    },
+    {
+      "eos": "WFF2",
+      "M_Msun": 1.4,
+      "R_km": 11.12450697849959,
+      "tau_solver_s": 0.1729228578813333,
+      "tau_empirical_s": 0.15781692911627634,
+      "signed_residual_percent": 9.57180503362045
+    }
+  ]
+}
