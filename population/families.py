@@ -82,6 +82,7 @@ def dm_admixed(base, G, mchi, rho_max=3.2e15, npts=3000, m0_mev=931.494):
     eos._lcf = PchipInterpolator(np.log(p_g), np.log(cs2f))
     eos.cs2_pert = lambda p, eq=eos: float(np.exp(eq._lcf(np.log(max(p, eq.pmin)))))
     eos.dark_fraction_central = (nchi[-1] * mchi) / (e_tot[-1]) if e_tot[-1] > 0 else 0.0
+    eos._diag = dict(rho=rho, p_g=p_g, nchi=nchi, e_tot=e_tot, eN=eN * ERG_CC_TO_MEV_FM3)   # tables for diagnostics only (dm_diagnostics.py)
     return eos
 
 

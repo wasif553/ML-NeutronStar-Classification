@@ -1,0 +1,14 @@
+{
+ "dgN": 90,
+ "dgCore_14": "100",
+ "dgFracMed_14": "0.94",
+ "dgFracMax_14": "4.6",
+ "dgCore_18": "100",
+ "dgFracMed_18": "1.24",
+ "dgFracMax_18": "6.2",
+ "dgOnsetMed": "1.4",
+ "dgOnsetLo": "1.1",
+ "dgOnsetHi": "1.7",
+ "dgRhoC14Med": "2.84",
+ "dgRhoC18Med": "3.57"
+}

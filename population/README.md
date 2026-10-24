@@ -24,6 +24,10 @@ MCHI_MAX=inf OUT_SUFFIX=_wide python pop_experiment.py all 14   # wide-prior sen
 python pop_report.py && python extra_report.py   # figures, tables/, macros_pop.json, macros_val.json
 python paired_analysis.py && python dm_prescription.py 90 14 && python frozen_test.py   # dark matter at fixed nuclear EoS, m0 prescription, frozen composition
 python published_tau_comparison.py   # damping times against Lioutas & Stergioulas (2018) Eq. (20) (macros_published.json)
+python tau_diagnostics.py && python dm_diagnostics.py && python paired_by_mass.py && python pair_subsets.py   # tau/crust check, dark-component onset, shift vs mass, subsets
+python tuned_learners.py 4           # tuned learners and engineered features (results_tuned.json)
+python gen_narrow.py 40 14 0.4,0.2,0.1,0.05,0.02 && python narrow_analysis.py 40   # EoS in narrowed nuclear windows about SLy (pop_narrow/, results_narrow.json)
+python report_new.py                 # tables/tab_tuned.tex, tab_narrow.tex, figs/figP8_narrow.pdf, macros_new.json
 ```
 
 The included `pop_data/` and `results_*` files are the ones used in the paper; the paper's numbers are generated from them
