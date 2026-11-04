@@ -43,6 +43,8 @@ jobs:
       - name: Re-evaluate causal-only class-balanced sample
         working-directory: population
         run: python causal_filtered_classification.py
+      - name: Generate fully causal primary results table figure and macros
+        run: python analysis/causal_primary.py
       - name: Regenerate canonical manuscript and compile PDF
         working-directory: analysis
         run: |
@@ -59,6 +61,11 @@ jobs:
           assert 'finite-sample split-conformal guarantee' in src
           assert '938.783' in src
           assert 'Phys. Dark Universe' in src
+          assert 'fully causality-audited EoSs' in src
+          assert 'Carvalho24Hyp' in src
+          assert 'Goncalves25' in src
+          assert '340' in src
+          assert Path('analysis/figs/fig_causal_primary.pdf').stat().st_size > 1000
           assert '3\\times10^{-8}' in src
           print('Scientific manuscript source checks passed')
           PY
@@ -71,7 +78,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f analysis/paper_final.pdf population/results_tau_consistency.json population/results_group_mondrian_summary.json population/results_group_mondrian.csv population/results_twofluid_background.json population/results_microphysics_anchor.json population/results_causality_audit.json population/results_causal_filtered_classification.json
+          git add -f analysis/paper_final.pdf population/results_tau_consistency.json population/results_group_mondrian_summary.json population/results_group_mondrian.csv population/results_twofluid_background.json population/results_microphysics_anchor.json population/results_causality_audit.json population/results_causal_filtered_classification.json analysis/figs/fig_causal_primary.pdf analysis/tables/tab_causal_primary.tex analysis/results/macros_causal.json
           if ! git diff --cached --quiet; then
             git commit -m "chore(paper): refresh compiled PDF and validated group coverage"
             git push origin HEAD:${{ github.ref_name }}
@@ -91,5 +98,8 @@ jobs:
             population/results_microphysics_anchor.json
             population/results_causality_audit.json
             population/results_causal_filtered_classification.json
+            analysis/figs/fig_causal_primary.pdf
+            analysis/tables/tab_causal_primary.tex
+            analysis/results/macros_causal.json
           if-no-files-found: warn
 
