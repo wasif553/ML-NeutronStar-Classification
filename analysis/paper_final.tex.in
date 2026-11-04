@@ -7,8 +7,8 @@
 \newcommand{\Msun}{M_\odot}
 \newcommand{\ftau}{M,R,f,\tau}
 
-\title{Exploring the Limits of Machine-Learning Classification of Neutron-Star Matter Models:\\[2pt]
-\large Populations of Equations of State, Literature-Anchored Errors and Calibrated Uncertainty}
+\title{Identifiability Limits of Neutron-Star Matter Composition:\\[2pt]
+\large Equation-of-State Uncertainty, Dark Matter and Machine-Learning Classification}
 \author{Wasif Husain\\ \small School of Science, Technology and Engineering, University of Sunshine Coast, Adelaide 5000}
 \date{}
 
