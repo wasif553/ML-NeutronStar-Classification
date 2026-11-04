@@ -27,6 +27,20 @@ Composition degeneracy is not unique to the dark sector: \citet{Alford05} demons
 
 
 
+Related neutron-star machine-learning research already addresses parameter inference, composition classification and model transfer. \citet{Carvalho24MR} infer nuclear parameters from uncertain mass--radius information using Bayesian neural networks, while \citet{Guo24} constrain a relativistic mean-field model from nuclear and stellar properties. Importantly, \citet{Carvalho24Hyp} already classify hyperon presence using microscopic EoS families, noisy observables and cross-model tests; therefore neither composition classification nor unseen-EoS evaluation is claimed as novel. \citet{Goncalves25} examine neural generalization of EoSs, and \citet{Baker26} incorporate astrophysical data into physics-informed Bayesian EoS inference. Table~\ref{tab:priorwork} specifies the complementary question tackled here: how a high-performing \emph{fixed-EoS} classifier fails under family-level EoS variation, held-out-EoS tests, relativistic $f$-mode data and honest uncertainty reporting. The experiments are not head-to-head reimplementations of these earlier methods.
+
+\begin{table}[t]\centering\scriptsize
+\caption{Relationship to prior neutron-star machine-learning work. The objectives and data differ; no relative performance ranking is implied.}\label{tab:priorwork}
+\begin{tabular}{>{\raggedright\arraybackslash}p{.18\textwidth}>{\raggedright\arraybackslash}p{.34\textwidth}>{\raggedright\arraybackslash}p{.35\textwidth}}\toprule
+Work & Scientific task & Distinction from this study\\\midrule
+\citet{Carvalho24MR} & Bayesian inference of nuclear properties using mass--radius data & Continuous inference, not $f$-mode-based four-family label testing\\
+\citet{Guo24} & Neural constraints on hadronic mean-field parameters & Different model-parameter inference target\\
+\citet{Carvalho24Hyp} & Hyperon-presence classification with microscopic EoSs and noise/model-transfer tests & More microphysical class definitions; not the neutron-decay DM/$f$-mode question\\
+\citet{Goncalves25} & Generalization of neural EoS representations & Different generalization target; motivates careful unseen-model validation\\
+\citet{Baker26} & Physics-informed Bayesian EoS inference with multimessenger data & Inference with physical priors, not a discrete identifiability stress test\\
+This study & Four-family $M,R,f,\tau$ classification and causal/uncertainty screening & Direct audit of fixed-sequence accuracy and residual EoS-family degeneracy\\\bottomrule
+\end{tabular}\end{table}
+
 A previous version of this work (arXiv:2512.23758v3) trained a small multilayer perceptron (MLP) on seven observables of 770 synthetic stellar models, each class being one EoS, and reported a test accuracy of 97.4\% on 116 held-out models. That number does not support the conclusions drawn from it, and a single sequence per class cannot say how well compositions can be told apart when the EoS itself is uncertain. This revision therefore does the following.
 \begin{enumerate}
 \item \textbf{Audits the single-sequence benchmark} (Sec.~\ref{sec:legacy}): class sizes, mass coverage, a class-dependent redshift inconsistency, and the dependence of the accuracy on how test points are chosen.
@@ -346,6 +360,12 @@ Tabulated redshift used as an input & Inconsistent with $(M,R)$ for two classes;
 Oscillation quantities from the earlier code & Population data generated with a new solver validated against six independent $f$-mode frequencies.\\\bottomrule\end{tabular}\end{table}
 
 \begin{thebibliography}{99}\small
+\bibitem[Carvalho et al.(2024a)]{Carvalho24MR} V.~Carvalho, M.~Ferreira and C.~Provid\^encia, \emph{From neutron star observations to nuclear matter properties: A machine learning approach}, Phys. Rev. D \textbf{109}, 123038 (2024), doi:10.1103/PhysRevD.109.123038.
+\bibitem[Guo et al.(2024)]{Guo24} L.-J.~Guo, J.-Y.~Xiong, Y.~Ma and Y.-L.~Ma, \emph{Insights into Neutron Star Equation of State by Machine Learning}, Astrophys. J. \textbf{965}, 47 (2024), doi:10.3847/1538-4357/ad2e8d.
+\bibitem[Carvalho et al.(2024b)]{Carvalho24Hyp} V.~Carvalho, M.~Ferreira and C.~Provid\^encia, \emph{Detecting hyperons in neutron stars: A machine learning approach}, Phys. Rev. D \textbf{110}, 123016 (2024), doi:10.1103/PhysRevD.110.123016.
+\bibitem[Gon\c{c}alves et al.(2025)]{Goncalves25} B.~S.~Gon\c{c}alves, M.~Dutra, S.~J.~B.~Duarte, B.~Jardim and C.~H.~Lenzi, \emph{Analysis of the Applicability of Deep Neural Networks on the Generalization of Neutron Star Equations of State}, Astron. Nachr. \textbf{346}, e20250017 (2025), doi:10.1002/asna.20250017.
+\bibitem[Baker et al.(2026)]{Baker26} J.~D.~Baker, C.~A.~Bertulani and R.~V.~Lobato, \emph{Physics-informed Bayesian neural network for the neutron star equation of state}, Phys. Rev. D \textbf{114}, 063063 (2026), doi:10.1103/x9r8-wbf7.
+
 \bibitem[Alford et al.(2005)]{Alford05} M.~Alford, M.~Braby, M.~Paris and S.~Reddy, \emph{Hybrid stars that masquerade as neutron stars}, Astrophys. J. \textbf{629}, 969--978 (2005), doi:10.1086/430902.
 \bibitem[Benhar et al.(2004)]{Benhar04} O. Benhar, V. Ferrari and L. Gualtieri, \emph{Gravitational wave asteroseismology reexamined}, Phys. Rev. D \textbf{70}, 124015 (2004), doi:10.1103/PhysRevD.70.124015.
 \bibitem[Carvalho et al.(2023)]{Carvalho23} V. Carvalho, M. Ferreira, T. Malik and C. Provid\^encia, \emph{Decoding neutron star observations: Revealing composition through Bayesian neural networks}, Phys. Rev. D \textbf{108}, 043031 (2023), doi:10.1103/PhysRevD.108.043031.
