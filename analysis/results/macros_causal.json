@@ -1,0 +1,17 @@
+{
+  "causalTotal": "340",
+  "causalPerClass": "85",
+  "causalRemoved": "9",
+  "causal_zero_mlp": "63.1",
+  "causal_zero_mlp_pair": "49.0",
+  "causal_zero_mlp_strange": "100.0",
+  "causal_zero_lr": "61.4",
+  "causal_zero_lr_pair": "50.0",
+  "causal_zero_lr_strange": "100.0",
+  "causal_noisy_mlp": "36.7",
+  "causal_noisy_mlp_pair": "49.8",
+  "causal_noisy_mlp_strange": "66.0",
+  "causal_noisy_lr": "35.9",
+  "causal_noisy_lr_pair": "51.0",
+  "causal_noisy_lr_strange": "61.8"
+}
