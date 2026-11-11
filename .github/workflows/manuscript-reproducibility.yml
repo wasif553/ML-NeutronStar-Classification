@@ -43,6 +43,11 @@ jobs:
       - name: Re-evaluate causal-only class-balanced sample
         working-directory: population
         run: python causal_filtered_classification.py
+      - name: Evaluate joint causality and stable dark fermion mass window
+        working-directory: population
+        run: python joint_stability_classification.py
+      - name: Generate joint-stability PDU results table
+        run: python analysis/joint_stability_report.py
       - name: Generate fully causal primary results table figure and macros
         run: python analysis/causal_primary.py
       - name: Regenerate canonical manuscript and compile PDF
@@ -92,6 +97,7 @@ jobs:
           assert 'fully causality-audited EoSs' in src
           assert 'Carvalho24Hyp' in src
           assert 'Goncalves25' in src
+          assert Path('analysis/tables/tab_joint_stability.tex').stat().st_size > 100
           assert '340' in src
           assert Path('analysis/figs/fig_causal_primary.pdf').stat().st_size > 1000
           assert '3\\times10^{-8}' in src
@@ -106,7 +112,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f analysis/pdu_submission.pdf analysis/pdu_submission.tex submission/pdu/pdu_latex_source.zip analysis/paper_final.pdf population/results_tau_consistency.json population/results_group_mondrian_summary.json population/results_group_mondrian.csv population/results_twofluid_background.json population/results_microphysics_anchor.json population/results_causality_audit.json population/results_causal_filtered_classification.json analysis/figs/fig_causal_primary.pdf analysis/tables/tab_causal_primary.tex analysis/results/macros_causal.json
+          git add -f population/results_joint_stability_classification.json analysis/tables/tab_joint_stability.tex analysis/results/macros_joint_stability.json analysis/pdu_submission.pdf analysis/pdu_submission.tex submission/pdu/pdu_latex_source.zip analysis/paper_final.pdf population/results_tau_consistency.json population/results_group_mondrian_summary.json population/results_group_mondrian.csv population/results_twofluid_background.json population/results_microphysics_anchor.json population/results_causality_audit.json population/results_causal_filtered_classification.json analysis/figs/fig_causal_primary.pdf analysis/tables/tab_causal_primary.tex analysis/results/macros_causal.json
           if ! git diff --cached --quiet; then
             git commit -m "chore(paper): refresh compiled PDF and validated group coverage"
             git push origin HEAD:${{ github.ref_name }}
@@ -119,6 +125,9 @@ jobs:
           path: |
             analysis/paper_final.pdf
             analysis/pdu_submission.pdf
+            population/results_joint_stability_classification.json
+            analysis/tables/tab_joint_stability.tex
+            analysis/results/macros_joint_stability.json
             analysis/pdu_submission.tex
             submission/pdu/pdu_latex_source.zip
             submission/pdu/cover_letter.md
