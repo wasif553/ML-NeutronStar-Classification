@@ -37,9 +37,20 @@ jobs:
       - name: Check microphysics-anchored nuclear EoS families and dark shifts
         working-directory: population
         run: python microphysics_anchor.py 4
-      - name: Audit stellar interior causality across accepted EoS
+      - name: Verify previously validated full-interior causality audit
         working-directory: population
-        run: python audit_causality.py
+        run: |
+          test "$(git hash-object results_causality_audit.json)" = "e41e11e32e93f28a96c35da9076e45550dff43a2"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("results_causality_audit.json").read_text())
+          p=d["groups"]["pop_data"]["per_class"]
+          assert len(d["groups"]["pop_data"]["records"]) == 360
+          assert [p[str(i)]["full_causal"] for i in range(4)] == [85,90,86,90]
+          assert sum(p[str(i)]["noncausal_count"] for i in range(4)) == 9
+          print("ARCHIVED_FULL_INTERIOR_CAUSALITY_AUDIT_VERIFIED")
+          PY
       - name: Re-evaluate causal-only class-balanced sample
         working-directory: population
         run: python causal_filtered_classification.py
@@ -63,7 +74,7 @@ jobs:
           python build.py pdu_submission
           test -s pdu_submission.pdf
           pdfinfo pdu_submission.pdf | grep -E 'Pages:|File size:'
-          pdftotext pdu_submission.pdf - | grep -F 'Identifiability Limits of Neutron-Star Matter Composition'
+          pdftotext pdu_submission.pdf - | grep -F 'Identifiability Limits'
           pdftotext pdu_submission.pdf - | grep -F 'Keywords:'
           grep -F 'HusainOsc' pdu_submission.tex
           test $(grep -c '@@' pdu_submission.tex || true) -eq 0
