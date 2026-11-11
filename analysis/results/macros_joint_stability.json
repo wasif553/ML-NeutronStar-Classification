@@ -1,0 +1,12 @@
+{
+  "jointN": "59",
+  "jointTotal": "236",
+  "joint_zero_mlp": "63.1",
+  "joint_zero_mlp_pair": "50.3",
+  "joint_zero_lr": "61.7",
+  "joint_zero_lr_pair": "51.3",
+  "joint_noisy_mlp": "36.5",
+  "joint_noisy_mlp_pair": "49.4",
+  "joint_noisy_lr": "35.2",
+  "joint_noisy_lr_pair": "48.3"
+}
