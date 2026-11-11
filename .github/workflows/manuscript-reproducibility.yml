@@ -52,6 +52,34 @@ jobs:
           test -s paper_final.pdf
           pdfinfo paper_final.pdf | grep -E 'Pages:|File size:'
           test $(grep -c 'missing macros:' paper_final.log || true) -eq 0
+      - name: Compile PDU-targeted manuscript and validate title and keywords
+        working-directory: analysis
+        run: |
+          python build.py pdu_submission
+          test -s pdu_submission.pdf
+          pdfinfo pdu_submission.pdf | grep -E 'Pages:|File size:'
+          pdftotext pdu_submission.pdf - | grep -F 'Identifiability Limits of Neutron-Star Matter Composition'
+          pdftotext pdu_submission.pdf - | grep -F 'Keywords:'
+          grep -F 'HusainOsc' pdu_submission.tex
+          test $(grep -c '@@' pdu_submission.tex || true) -eq 0
+      - name: Build standalone PDU LaTeX source bundle
+        working-directory: analysis
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          out = Path('../submission/pdu/pdu_latex_source.zip')
+          paths = [Path('pdu_submission.tex')]
+          paths += sorted(Path('figs').glob('*.pdf'))
+          paths += sorted(Path('tables').glob('*.tex'))
+          assert len(paths) > 12
+          with ZipFile(out, 'w', ZIP_DEFLATED) as f:
+              for p in paths:
+                  assert p.exists() and p.stat().st_size > 0, p
+                  f.write(p, p.as_posix())
+          assert out.stat().st_size > 10000
+          print('PDU source bundle:', out, out.stat().st_size, 'bytes,', len(paths), 'files')
+          PY
       - name: Validate population manuscript claims
         run: |
           python - <<'PY'
@@ -78,7 +106,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f analysis/paper_final.pdf population/results_tau_consistency.json population/results_group_mondrian_summary.json population/results_group_mondrian.csv population/results_twofluid_background.json population/results_microphysics_anchor.json population/results_causality_audit.json population/results_causal_filtered_classification.json analysis/figs/fig_causal_primary.pdf analysis/tables/tab_causal_primary.tex analysis/results/macros_causal.json
+          git add -f analysis/pdu_submission.pdf analysis/pdu_submission.tex submission/pdu/pdu_latex_source.zip analysis/paper_final.pdf population/results_tau_consistency.json population/results_group_mondrian_summary.json population/results_group_mondrian.csv population/results_twofluid_background.json population/results_microphysics_anchor.json population/results_causality_audit.json population/results_causal_filtered_classification.json analysis/figs/fig_causal_primary.pdf analysis/tables/tab_causal_primary.tex analysis/results/macros_causal.json
           if ! git diff --cached --quiet; then
             git commit -m "chore(paper): refresh compiled PDF and validated group coverage"
             git push origin HEAD:${{ github.ref_name }}
@@ -90,6 +118,13 @@ jobs:
           name: revised-manuscript-and-evidence
           path: |
             analysis/paper_final.pdf
+            analysis/pdu_submission.pdf
+            analysis/pdu_submission.tex
+            submission/pdu/pdu_latex_source.zip
+            submission/pdu/cover_letter.md
+            submission/pdu/highlights.txt
+            submission/pdu/novelty_and_overlap_review.md
+            submission/pdu/declarations_DRAFT.md
             analysis/paper_final.tex
             population/results_tau_consistency.json
             population/results_group_mondrian.csv
