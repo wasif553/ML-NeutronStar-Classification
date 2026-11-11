@@ -1,8 +1,5 @@
-Highlights
 - Tests dark-matter identifiability with held-out neutron-star equations of state.
 - Fully causality-screened benchmark contains 340 equations of state.
 - Accuracy falls from 63.1% to 36.7% under illustrative measurement errors.
 - Nuclear-EoS uncertainty masks an approximately 0.56% median f-mode shift.
 - Nucleonic and dark-admixed families remain strongly confused.
-
-Author check: The median paired shift is from the original 360-EoS auxiliary sample, not the 340-EoS primary benchmark.
