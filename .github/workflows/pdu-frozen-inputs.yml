@@ -1,0 +1,25 @@
+name: Export frozen PDU numerical inputs
+on:
+  push:
+    branches: [paper/pdu-final-referee-revision-2026-11-24]
+    paths: ['.github/workflows/pdu-frozen-inputs.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pdu-frozen-inputs
+          path: |
+            population/pop_data/
+            population/pop_base/
+            population/*.py
+            population/results_causality_audit.json
+            population/results_validation.json
+            population/results_microphysics_anchor.json
+            population/results_joint_stability_classification.json
+          if-no-files-found: error
