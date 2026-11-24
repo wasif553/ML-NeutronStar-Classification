@@ -1,0 +1,65 @@
+name: PDU referee revision checks
+on:
+  push:
+    branches: [paper/pdu-final-referee-revision-2026-11-24]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: |
+          python -m pip install -r requirements.txt scipy sympy joblib
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended poppler-utils
+      - name: Validate shared-EoS evidence code
+        working-directory: population
+        run: |
+          python shared_eos_evidence.py --self-test
+          python screening_diagnostics.py
+          python shared_eos_evidence.py --sample joint --draws 8 --reps 3 --quadrature 66 132 264 --output results_shared_eos_joint.json
+          python shared_eos_evidence.py --sample causal --draws 8 --reps 3 --quadrature 132 264 --output results_shared_eos_causal.json
+      - name: Rebuild manuscript candidate (new analysis not yet incorporated)
+        working-directory: analysis
+        run: |
+          python causal_primary.py
+          python build.py pdu_submission
+          pdftotext -layout pdu_submission.pdf pdu_submission.txt
+          grep -F '36.7' pdu_submission.txt
+          grep -F '36.5' pdu_submission.txt
+          if grep -E 'undefined references|undefined citations|Citation .* undefined|Reference .* undefined' pdu_submission.log; then exit 1; fi
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          p=Path('tables/tab_causal_primary.tex')
+          for line in p.read_text().splitlines():
+              assert line.count('&') == 4, line
+              assert '20% f' not in line, line
+          with ZipFile('pdu_revision_candidate_source.zip','w',ZIP_DEFLATED) as z:
+              for p in [Path('pdu_submission.tex'),*sorted(Path('tables').glob('*.tex')),*sorted(Path('figs').glob('*.pdf'))]:
+                  z.write(p,p.as_posix())
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pdu-revision-candidate-not-for-submission
+          if-no-files-found: warn
+          path: |
+            analysis/pdu_submission.pdf
+            analysis/pdu_submission.log
+            analysis/pdu_submission.txt
+            analysis/pdu_revision_candidate_source.zip
+            population/results_shared_eos_joint.json
+            population/results_shared_eos_causal.json
+            population/results_screening_diagnostics.json
