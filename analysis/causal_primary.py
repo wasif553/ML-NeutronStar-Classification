@@ -54,7 +54,7 @@ def main():
             # Cross-validation repetitions overlap in underlying EoSs, so do
             # not turn their standard deviation into an independent-sample CI.
             cells.append(
-                f"{label} & {name} & {100*mean:.1f} & "
+                f"{label.replace(chr(37), chr(92)+chr(37))} & {name} & {100*mean:.1f} & "
                 f"{100*recall[1]:.1f} & {100*pair:.1f} "+r"\\"
             )
             if model != "MLP":

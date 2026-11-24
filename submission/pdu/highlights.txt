@@ -1,5 +1,5 @@
-- Tests dark-matter identifiability with held-out neutron-star equations of state.
-- Fully causality-screened benchmark contains 340 equations of state.
-- Accuracy falls from 63.1% to 36.7% under illustrative measurement errors.
-- Nuclear-EoS uncertainty masks an approximately 0.56% median f-mode shift.
-- Nucleonic and dark-admixed families remain strongly confused.
+- Tests a neutron-decay dark-sector model within phenomenological EoS families.
+- Joint causality and dark-fermion stability screening retains 236 EoSs.
+- Joint-screened accuracy is 63.1% without noise and 36.5% with noise.
+- The shared nuclear prior obscures the modelled median 0.56% f-mode shift.
+- Single-star classification is conditional on the model and observing priors.

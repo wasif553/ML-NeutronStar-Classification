@@ -20,11 +20,11 @@ The earlier published work studies neutron-decay dark matter with self-interacti
 - We have discovered a new dark-sector mechanism or derived a microscopic dark-matter abundance.
 - We have independently solved a general two-fluid dark-matter eigenmode problem.
 - The numerical 63.1% and 36.7% values are universal bounds on the information content of gravitational waves.
-- Every model in the 340-EoS primary set is viable under **both** full-interior causality **and** the narrower dark-fermion mass-stability window. The mass-window restriction has a separately reported sensitivity test, not a joint-filtered primary analysis.
+- Every model in the 340-EoS primary set is viable under **both** full-interior causality **and** the narrower dark-fermion mass-stability window. The jointly filtered 236-EoS sensitivity analysis is now available and gives 63.1% noise-free and 36.5% noisy accuracy. It is not a universal bound.
 
 ## Remaining scientifically material risks
 
-- The main 340-EoS sample is fully screened for causality but the neutron-decay dark-matter mass prior includes the exploratory region above the stable neutron-dark-fermion window. A simultaneously causality- and particle-stability-filtered **primary** analysis would be stronger for PDU.
+- The main 340-EoS sample is fully screened for causality but the neutron-decay dark-matter mass prior includes the exploratory region above the stable neutron-dark-fermion window. A simultaneously screened 236-EoS sensitivity test is now completed; broader statistics must still be rerun on the screened population.
 - Four families are phenomenological proxies; no systematic microphysical hybrid-star population or hyperon-fraction inference.
 - The primary 340-EoS results include two learners and two scenarios; the six-learner, calibration, bootstrap and other extended metrics use the original 360-EoS set, which included nine noncausal models.
 - The main dark-matter f-mode eigenproblem uses an effective single-fluid response. Realistic two-fluid perturbations and transport may change discriminatory power.
