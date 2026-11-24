@@ -18,3 +18,19 @@ The shared-EoS evidence test computes log likelihood per EoS, marginalizing each
 The screening diagnostic measures retention conditional on already accepted records, not original proposal acceptance. Expanded-G screening, pressure-curve fit, fully causal extended learner rerun, independent stellar mode benchmarks, old-code reconciliation and archival/licence signoff remain mandatory. Do not upload this candidate to a journal until scientific review is closed.
 
 The GitHub Actions workflow produces an explicitly non-submission candidate archive if it runs successfully. It does not publish a release or change the original review branch.
+
+## Extended screened experiments
+
+These preserve the frozen original results. Use the same Python interpreter as above.
+
+    cd population
+    python screened_reanalysis.py --sample joint --workers 4
+    python screened_reanalysis.py --sample causal --workers 4
+
+They write new CSV/JSON in screened_reanalysis/<sample>/, not into the archived result files. No automatically regenerated manuscript table is considered final until reviewed. The original statistical and calibration outputs cannot be relabelled as screened.
+
+## Physical interaction and mimicry pilot
+
+    python dark_prior_mimicry.py --proposals 8 --fit-count 8 --workers 4
+
+Review mode failures, pressure overlap, and screening counts before expanding to --proposals 100 --fit-count 59. All proposal failures are recorded. Seven G strata cover 5–2000 fm² with stable masses; the same nuclear parameter and dark mass draws recur across G strata. The optional Mmax<=2.3 cut is a sensitivity diagnostic, not an absolute observational bound. The PP fit minimizes log eps(P) on alternating pressure points and checks P(eps) on the remaining points; it retains physical screen and stellar-observable residuals. It is not a substitute for independent published mode validation.
