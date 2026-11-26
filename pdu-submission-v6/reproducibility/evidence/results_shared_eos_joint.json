@@ -1,0 +1,1828 @@
+{
+  "selection": {
+    "full_causal_by_class": {
+      "0": 85,
+      "1": 90,
+      "2": 86,
+      "3": 90
+    },
+    "joint_eligible_by_class": {
+      "0": 85,
+      "1": 90,
+      "2": 59,
+      "3": 90
+    },
+    "used_per_class": 59,
+    "total": 236,
+    "dark_fermion_mev_window": [
+      937.9,
+      938.783
+    ],
+    "screen": "256-point pressure-grid interior causality plus stable chi mass for DM; rebalanced all classes"
+  },
+  "scenarios": {
+    "one_MR": [
+      [
+        [
+          0,
+          1
+        ],
+        [
+          0.1,
+          0.09
+        ]
+      ]
+    ],
+    "one_MRf": [
+      [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0.1,
+          0.09,
+          0.2
+        ]
+      ]
+    ],
+    "two_MR_MLambda": [
+      [
+        [
+          0,
+          1
+        ],
+        [
+          0.1,
+          0.09
+        ]
+      ],
+      [
+        [
+          0,
+          4
+        ],
+        [
+          0.05,
+          0.3
+        ]
+      ]
+    ],
+    "three_MR_MLambda_Mf": [
+      [
+        [
+          0,
+          1
+        ],
+        [
+          0.1,
+          0.09
+        ]
+      ],
+      [
+        [
+          0,
+          4
+        ],
+        [
+          0.05,
+          0.3
+        ]
+      ],
+      [
+        [
+          0,
+          2
+        ],
+        [
+          0.05,
+          0.2
+        ]
+      ]
+    ],
+    "three_MR_MLambda_Mf_precise": [
+      [
+        [
+          0,
+          1
+        ],
+        [
+          0.03,
+          0.03
+        ]
+      ],
+      [
+        [
+          0,
+          4
+        ],
+        [
+          0.03,
+          0.1
+        ]
+      ],
+      [
+        [
+          0,
+          2
+        ],
+        [
+          0.03,
+          0.005
+        ]
+      ]
+    ]
+  },
+  "draws": 8,
+  "repetitions": 3,
+  "results": {
+    "66": {
+      "one_MR": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.3252118644067796,
+          "accuracy_cluster_percentile": [
+            0.30808615819209034,
+            0.3416313559322034
+          ],
+          "nll_nats": 1.3258977896075788,
+          "predictive_information_score_nats": 0.060396571512311814,
+          "predictive_information_cluster_percentile": [
+            0.041053355864977714,
+            0.0789095778849429
+          ],
+          "mean_posterior_entropy_nats": 1.3205319536295352,
+          "confusion_row_normalized": [
+            [
+              0.554378531073449,
+              0.30437853107344415,
+              0.10593220338983014,
+              0.03531073446327668
+            ],
+            [
+              0.27966101694915135,
+              0.6370056497175152,
+              0.037429378531073476,
+              0.04590395480225989
+            ],
+            [
+              0.5685028248587588,
+              0.34745762711864286,
+              0.055790960451977054,
+              0.028248587570621334
+            ],
+            [
+              0.45197740112994433,
+              0.41666666666666674,
+              0.07768361581920853,
+              0.05367231638418042
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.2989337395277998,
+            0.37349896480331374,
+            0.2015306122448976,
+            0.3290043290043281
+          ],
+          "recall": [
+            0.554378531073449,
+            0.6370056497175152,
+            0.055790960451977054,
+            0.05367231638418042
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0012989185632776904,
+            "1": 0.0789143901338415,
+            "2": -0.007101488023912769,
+            "3": 0.024139245877279104
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.48728813559322043,
+          "accuracy_cluster_percentile": [
+            0.45303672316384175,
+            0.5240112994350282
+          ],
+          "nll_nats": 0.6960084427165929,
+          "predictive_information_score_nats": -0.002861262156647615,
+          "predictive_information_cluster_percentile": [
+            -0.0071063023034467765,
+            0.0015348511505031137
+          ],
+          "mean_posterior_entropy_nats": 0.6917449509470222,
+          "confusion_row_normalized": [
+            [
+              0.588276836158192,
+              0.41172316384180785
+            ],
+            [
+              0.6137005649717512,
+              0.3862994350282488
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.4894242068155112,
+            0.4840707964601772
+          ],
+          "recall": [
+            0.588276836158192,
+            0.3862994350282488
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0012989185632776904,
+            "2": -0.007101488023912769
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "one_MRf": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.35875706214689257,
+          "accuracy_cluster_percentile": [
+            0.3405720338983051,
+            0.37747175141242933
+          ],
+          "nll_nats": 1.2987758987740592,
+          "predictive_information_score_nats": 0.08751846234583138,
+          "predictive_information_cluster_percentile": [
+            0.06919698384777861,
+            0.10534699717653706
+          ],
+          "mean_posterior_entropy_nats": 1.2851935567983428,
+          "confusion_row_normalized": [
+            [
+              0.45127118644068026,
+              0.27966101694915046,
+              0.12994350282485873,
+              0.13912429378531066
+            ],
+            [
+              0.19703389830508442,
+              0.6596045197740115,
+              0.04872881355932205,
+              0.0946327683615821
+            ],
+            [
+              0.44915254237288355,
+              0.30579096045197596,
+              0.08050847457627094,
+              0.16454802259886953
+            ],
+            [
+              0.36228813559322176,
+              0.2888418079096038,
+              0.10522598870056525,
+              0.24364406779660927
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.30914368650217744,
+            0.43001841620626274,
+            0.22093023255813884,
+            0.3795379537953789
+          ],
+          "recall": [
+            0.45127118644068026,
+            0.6596045197740115,
+            0.08050847457627094,
+            0.24364406779660927
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0011233129126017526,
+            "1": 0.05699940218755383,
+            "2": -0.006978738351431541,
+            "3": 0.03684073569459817
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.4932909604519774,
+          "accuracy_cluster_percentile": [
+            0.45762711864406785,
+            0.5310734463276836
+          ],
+          "nll_nats": 0.6963996472713652,
+          "predictive_information_score_nats": -0.003252466711419877,
+          "predictive_information_cluster_percentile": [
+            -0.008190486388622076,
+            0.0017980623376483429
+          ],
+          "mean_posterior_entropy_nats": 0.691369916971911,
+          "confusion_row_normalized": [
+            [
+              0.5911016949152542,
+              0.40889830508474573
+            ],
+            [
+              0.6045197740112993,
+              0.3954802259887007
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.4943886591848789,
+            0.49165935030728725
+          ],
+          "recall": [
+            0.5911016949152542,
+            0.3954802259887007
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0011233129126017526,
+            "2": -0.006978738351431541
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "two_MR_MLambda": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.41613700564971756,
+          "accuracy_cluster_percentile": [
+            0.39406338276836156,
+            0.43855932203389825
+          ],
+          "nll_nats": 1.2080843959836014,
+          "predictive_information_score_nats": 0.17820996513628917,
+          "predictive_information_cluster_percentile": [
+            0.1534770802670571,
+            0.20273470545198125
+          ],
+          "mean_posterior_entropy_nats": 1.2044249625781365,
+          "confusion_row_normalized": [
+            [
+              0.39689265536723356,
+              0.23375706214689157,
+              0.19350282485875656,
+              0.1758474576271184
+            ],
+            [
+              0.15042372881356006,
+              0.7182203389830497,
+              0.06709039548022615,
+              0.064265536723164
+            ],
+            [
+              0.3947740112994369,
+              0.24081920903954684,
+              0.16384180790960445,
+              0.20056497175141183
+            ],
+            [
+              0.26765536723163696,
+              0.2055084745762706,
+              0.14124293785310765,
+              0.38559322033898485
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.3280793928779926,
+            0.5136363636363642,
+            0.2896379525593008,
+            0.46666666666666823
+          ],
+          "recall": [
+            0.39689265536723356,
+            0.7182203389830497,
+            0.16384180790960445,
+            0.38559322033898485
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0015152567524947436,
+            "1": -0.04380569686925039,
+            "2": -0.006512942080152742,
+            "3": 0.07229193205030238
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.506002824858757,
+          "accuracy_cluster_percentile": [
+            0.466454802259887,
+            0.5483845338983052
+          ],
+          "nll_nats": 0.6976841800641249,
+          "predictive_information_score_nats": -0.0045369995041796285,
+          "predictive_information_cluster_percentile": [
+            -0.012182099139560143,
+            0.003923426536255548
+          ],
+          "mean_posterior_entropy_nats": 0.6899014199664626,
+          "confusion_row_normalized": [
+            [
+              0.5762711864406782,
+              0.42372881355932185
+            ],
+            [
+              0.5642655367231643,
+              0.4357344632768358
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.5052631578947367,
+            0.5069843878389482
+          ],
+          "recall": [
+            0.5762711864406782,
+            0.4357344632768358
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0015152567524947436,
+            "2": -0.006512942080152742
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "three_MR_MLambda_Mf": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.42408192090395486,
+          "accuracy_cluster_percentile": [
+            0.4014830508474577,
+            0.4461555437853108
+          ],
+          "nll_nats": 1.1925336895961798,
+          "predictive_information_score_nats": 0.1937606715237108,
+          "predictive_information_cluster_percentile": [
+            0.16649044627945964,
+            0.2206235246511441
+          ],
+          "mean_posterior_entropy_nats": 1.1885645116761392,
+          "confusion_row_normalized": [
+            [
+              0.38700564971751594,
+              0.23870056497175038,
+              0.19844632768361534,
+              0.17584745762711848
+            ],
+            [
+              0.14124293785310824,
+              0.7295197740112981,
+              0.06285310734463297,
+              0.06638418079096065
+            ],
+            [
+              0.38771186440678146,
+              0.23658192090395375,
+              0.16313559322033896,
+              0.21257062146892586
+            ],
+            [
+              0.25918079096045027,
+              0.18432203389830454,
+              0.1398305084745764,
+              0.41666666666666874
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.32932692307692385,
+            0.5251652262328425,
+            0.2891113892365457,
+            0.4781199351701799
+          ],
+          "recall": [
+            0.38700564971751594,
+            0.7295197740112981,
+            0.16313559322033896,
+            0.41666666666666874
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.00232585644325587,
+            "1": -0.05932762598072606,
+            "2": -0.009599358173410516,
+            "3": 0.08505062268395687
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.5049435028248588,
+          "accuracy_cluster_percentile": [
+            0.4643361581920903,
+            0.5476694915254237
+          ],
+          "nll_nats": 0.6986287813751167,
+          "predictive_information_score_nats": -0.005481600815171461,
+          "predictive_information_cluster_percentile": [
+            -0.0137944353008701,
+            0.003339353738494255
+          ],
+          "mean_posterior_entropy_nats": 0.6895395871712159,
+          "confusion_row_normalized": [
+            [
+              0.5826271186440679,
+              0.4173728813559321
+            ],
+            [
+              0.5727401129943506,
+              0.4272598870056495
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.5042787286063569,
+            0.5058528428093645
+          ],
+          "recall": [
+            0.5826271186440679,
+            0.4272598870056495
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.00232585644325587,
+            "2": -0.009599358173410516
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "three_MR_MLambda_Mf_precise": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.5958686440677966,
+          "accuracy_cluster_percentile": [
+            0.5649717514124295,
+            0.6237641242937852
+          ],
+          "nll_nats": 0.7966292050738383,
+          "predictive_information_score_nats": 0.5896651560460523,
+          "predictive_information_cluster_percentile": [
+            0.5378035709711968,
+            0.6382789906655228
+          ],
+          "mean_posterior_entropy_nats": 0.6882388792526241,
+          "confusion_row_normalized": [
+            [
+              0.46892655367231767,
+              0.021186440677965976,
+              0.37994350282485806,
+              0.12994350282485834
+            ],
+            [
+              0.01765536723163872,
+              0.956214689265536,
+              0.011299435028248782,
+              0.014830508474576525
+            ],
+            [
+              0.4604519774011321,
+              0.018361581920903883,
+              0.3340395480225979,
+              0.1871468926553662
+            ],
+            [
+              0.18008474576271138,
+              0.027542372881355914,
+              0.16807909604519747,
+              0.6242937853107353
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.41604010025062654,
+            0.9344375431331956,
+            0.3739130434782605,
+            0.652880354505171
+          ],
+          "recall": [
+            0.46892655367231767,
+            0.956214689265536,
+            0.3340395480225979,
+            0.6242937853107353
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": 0.08967656970868745,
+            "1": -1.0018692846571293,
+            "2": 0.009359009548300937,
+            "3": 0.3498694461907912
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.4858757062146893,
+          "accuracy_cluster_percentile": [
+            0.4371468926553673,
+            0.5353195621468926
+          ],
+          "nll_nats": 0.7978490095490942,
+          "predictive_information_score_nats": -0.10470182898914893,
+          "predictive_information_cluster_percentile": [
+            -0.17476263640284395,
+            -0.04816342994945311
+          ],
+          "mean_posterior_entropy_nats": 0.6436698975608518,
+          "confusion_row_normalized": [
+            [
+              0.5211864406779665,
+              0.4788135593220335
+            ],
+            [
+              0.5494350282485883,
+              0.4505649717514118
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.4868073878627967,
+            0.4848024316109421
+          ],
+          "recall": [
+            0.5211864406779665,
+            0.4505649717514118
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": 0.08967656970868745,
+            "2": 0.009359009548300937
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      }
+    },
+    "132": {
+      "one_MR": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.3252118644067796,
+          "accuracy_cluster_percentile": [
+            0.30808615819209034,
+            0.3416313559322034
+          ],
+          "nll_nats": 1.325898166400232,
+          "predictive_information_score_nats": 0.060396194719658514,
+          "predictive_information_cluster_percentile": [
+            0.04105297698803456,
+            0.07890943267627182
+          ],
+          "mean_posterior_entropy_nats": 1.3205313736601918,
+          "confusion_row_normalized": [
+            [
+              0.554378531073449,
+              0.30437853107344415,
+              0.10593220338983014,
+              0.03531073446327668
+            ],
+            [
+              0.27966101694915135,
+              0.6370056497175152,
+              0.037429378531073476,
+              0.04590395480225989
+            ],
+            [
+              0.5685028248587588,
+              0.34745762711864286,
+              0.055790960451977054,
+              0.028248587570621334
+            ],
+            [
+              0.45197740112994433,
+              0.41666666666666674,
+              0.07768361581920853,
+              0.05367231638418042
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.2989337395277998,
+            0.37349896480331374,
+            0.2015306122448976,
+            0.3290043290043281
+          ],
+          "recall": [
+            0.554378531073449,
+            0.6370056497175152,
+            0.055790960451977054,
+            0.05367231638418042
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.001299497946060158,
+            "1": 0.0789140551495627,
+            "2": -0.007102058346758434,
+            "3": 0.024138821693824947
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.48728813559322043,
+          "accuracy_cluster_percentile": [
+            0.45303672316384175,
+            0.5240112994350282
+          ],
+          "nll_nats": 0.6960084685905119,
+          "predictive_information_score_nats": -0.002861288030566622,
+          "predictive_information_cluster_percentile": [
+            -0.007106471634226952,
+            0.0015348547586586658
+          ],
+          "mean_posterior_entropy_nats": 0.6917449245004175,
+          "confusion_row_normalized": [
+            [
+              0.588276836158192,
+              0.41172316384180785
+            ],
+            [
+              0.6137005649717512,
+              0.3862994350282488
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.4894242068155112,
+            0.4840707964601772
+          ],
+          "recall": [
+            0.588276836158192,
+            0.3862994350282488
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.001299497946060158,
+            "2": -0.007102058346758434
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "one_MRf": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.35875706214689257,
+          "accuracy_cluster_percentile": [
+            0.3405720338983051,
+            0.37747175141242933
+          ],
+          "nll_nats": 1.2987762531096738,
+          "predictive_information_score_nats": 0.08751810801021676,
+          "predictive_information_cluster_percentile": [
+            0.0691973349452355,
+            0.1053467930316061
+          ],
+          "mean_posterior_entropy_nats": 1.2851933971022536,
+          "confusion_row_normalized": [
+            [
+              0.45127118644068026,
+              0.27966101694915046,
+              0.12994350282485873,
+              0.13912429378531066
+            ],
+            [
+              0.19703389830508442,
+              0.6596045197740115,
+              0.04872881355932205,
+              0.0946327683615821
+            ],
+            [
+              0.44915254237288355,
+              0.30579096045197596,
+              0.08050847457627094,
+              0.16454802259886953
+            ],
+            [
+              0.36228813559322176,
+              0.2888418079096038,
+              0.10522598870056525,
+              0.24364406779660927
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.30914368650217744,
+            0.43001841620626274,
+            0.22093023255813884,
+            0.3795379537953789
+          ],
+          "recall": [
+            0.45127118644068026,
+            0.6596045197740115,
+            0.08050847457627094,
+            0.24364406779660927
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0011240740715222335,
+            "1": 0.05699890104440085,
+            "2": -0.006979571338574139,
+            "3": 0.03683976091778741
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.4932909604519774,
+          "accuracy_cluster_percentile": [
+            0.45762711864406785,
+            0.5310734463276836
+          ],
+          "nll_nats": 0.6963996897106655,
+          "predictive_information_score_nats": -0.003252509150720173,
+          "predictive_information_cluster_percentile": [
+            -0.008190550373461059,
+            0.0017980915580844137
+          ],
+          "mean_posterior_entropy_nats": 0.6913698935966741,
+          "confusion_row_normalized": [
+            [
+              0.5911016949152542,
+              0.40889830508474573
+            ],
+            [
+              0.6045197740112993,
+              0.3954802259887007
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.4943886591848789,
+            0.49165935030728725
+          ],
+          "recall": [
+            0.5911016949152542,
+            0.3954802259887007
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0011240740715222335,
+            "2": -0.006979571338574139
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "two_MR_MLambda": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.41613700564971756,
+          "accuracy_cluster_percentile": [
+            0.39406338276836156,
+            0.43855932203389825
+          ],
+          "nll_nats": 1.2080859291181492,
+          "predictive_information_score_nats": 0.1782084320017414,
+          "predictive_information_cluster_percentile": [
+            0.15347416544252335,
+            0.20273350407380097
+          ],
+          "mean_posterior_entropy_nats": 1.2044349539907113,
+          "confusion_row_normalized": [
+            [
+              0.39689265536723356,
+              0.23375706214689157,
+              0.19350282485875656,
+              0.1758474576271184
+            ],
+            [
+              0.15042372881356006,
+              0.7182203389830497,
+              0.06709039548022615,
+              0.064265536723164
+            ],
+            [
+              0.3947740112994369,
+              0.24081920903954684,
+              0.16384180790960445,
+              0.20056497175141183
+            ],
+            [
+              0.26765536723163696,
+              0.2055084745762706,
+              0.14124293785310765,
+              0.38559322033898485
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.3280793928779926,
+            0.5136363636363642,
+            0.2896379525593008,
+            0.46666666666666823
+          ],
+          "recall": [
+            0.39689265536723356,
+            0.7182203389830497,
+            0.16384180790960445,
+            0.38559322033898485
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0015216444049617822,
+            "1": -0.043803510617394285,
+            "2": -0.006518567680665575,
+            "3": 0.07228858294344728
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.506002824858757,
+          "accuracy_cluster_percentile": [
+            0.466454802259887,
+            0.5483845338983052
+          ],
+          "nll_nats": 0.6976836880625177,
+          "predictive_information_score_nats": -0.0045365075025723955,
+          "predictive_information_cluster_percentile": [
+            -0.01218252444422907,
+            0.003923373499121863
+          ],
+          "mean_posterior_entropy_nats": 0.6899017187868687,
+          "confusion_row_normalized": [
+            [
+              0.5762711864406782,
+              0.42372881355932185
+            ],
+            [
+              0.5642655367231643,
+              0.4357344632768358
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.5052631578947367,
+            0.5069843878389482
+          ],
+          "recall": [
+            0.5762711864406782,
+            0.4357344632768358
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0015216444049617822,
+            "2": -0.006518567680665575
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "three_MR_MLambda_Mf": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.42408192090395486,
+          "accuracy_cluster_percentile": [
+            0.4014830508474577,
+            0.4461555437853108
+          ],
+          "nll_nats": 1.1925341833441179,
+          "predictive_information_score_nats": 0.1937601777757727,
+          "predictive_information_cluster_percentile": [
+            0.1664897626566193,
+            0.2206226469274437
+          ],
+          "mean_posterior_entropy_nats": 1.1885735219993263,
+          "confusion_row_normalized": [
+            [
+              0.38700564971751594,
+              0.23870056497175038,
+              0.19844632768361534,
+              0.17584745762711848
+            ],
+            [
+              0.14124293785310824,
+              0.7295197740112981,
+              0.06285310734463297,
+              0.06638418079096065
+            ],
+            [
+              0.38771186440678146,
+              0.23658192090395375,
+              0.16313559322033896,
+              0.21257062146892586
+            ],
+            [
+              0.25918079096045027,
+              0.18432203389830454,
+              0.1398305084745764,
+              0.41666666666666874
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.32932692307692385,
+            0.5251652262328425,
+            0.2891113892365457,
+            0.4781199351701799
+          ],
+          "recall": [
+            0.38700564971751594,
+            0.7295197740112981,
+            0.16313559322033896,
+            0.41666666666666874
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.002332254193245315,
+            "1": -0.059325980021141755,
+            "2": -0.00960584542785322,
+            "3": 0.08504685879595446
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.5049435028248588,
+          "accuracy_cluster_percentile": [
+            0.4643361581920903,
+            0.5476694915254237
+          ],
+          "nll_nats": 0.6986285042098788,
+          "predictive_information_score_nats": -0.005481323649933478,
+          "predictive_information_cluster_percentile": [
+            -0.01379379727228347,
+            0.0033394932807214728
+          ],
+          "mean_posterior_entropy_nats": 0.6895398867462659,
+          "confusion_row_normalized": [
+            [
+              0.5826271186440679,
+              0.4173728813559321
+            ],
+            [
+              0.5727401129943506,
+              0.4272598870056495
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.5042787286063569,
+            0.5058528428093645
+          ],
+          "recall": [
+            0.5826271186440679,
+            0.4272598870056495
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.002332254193245315,
+            "2": -0.00960584542785322
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "three_MR_MLambda_Mf_precise": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.5958686440677966,
+          "accuracy_cluster_percentile": [
+            0.5649717514124295,
+            0.6237641242937852
+          ],
+          "nll_nats": 0.7964745503840387,
+          "predictive_information_score_nats": 0.5898198107358519,
+          "predictive_information_cluster_percentile": [
+            0.5380418125443541,
+            0.6383756873263551
+          ],
+          "mean_posterior_entropy_nats": 0.6883098062182726,
+          "confusion_row_normalized": [
+            [
+              0.46892655367231767,
+              0.021186440677965976,
+              0.37994350282485806,
+              0.12994350282485834
+            ],
+            [
+              0.01765536723163872,
+              0.956214689265536,
+              0.011299435028248782,
+              0.014830508474576525
+            ],
+            [
+              0.4604519774011321,
+              0.018361581920903883,
+              0.3340395480225979,
+              0.1871468926553662
+            ],
+            [
+              0.18008474576271138,
+              0.027542372881355914,
+              0.16807909604519747,
+              0.6242937853107353
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.41604010025062654,
+            0.9344375431331956,
+            0.3739130434782605,
+            0.652880354505171
+          ],
+          "recall": [
+            0.46892655367231767,
+            0.956214689265536,
+            0.3340395480225979,
+            0.6242937853107353
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": 0.08905843364581052,
+            "1": -1.001809944838947,
+            "2": 0.008728724021006915,
+            "3": 0.3164913002048253
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.4858757062146893,
+          "accuracy_cluster_percentile": [
+            0.4371468926553673,
+            0.5353195621468926
+          ],
+          "nll_nats": 0.7975562425157401,
+          "predictive_information_score_nats": -0.1044090619557948,
+          "predictive_information_cluster_percentile": [
+            -0.17426934591194898,
+            -0.047975438575792784
+          ],
+          "mean_posterior_entropy_nats": 0.6437067685637217,
+          "confusion_row_normalized": [
+            [
+              0.5211864406779665,
+              0.4788135593220335
+            ],
+            [
+              0.5494350282485883,
+              0.4505649717514118
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.4868073878627967,
+            0.4848024316109421
+          ],
+          "recall": [
+            0.5211864406779665,
+            0.4505649717514118
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": 0.08905843364581052,
+            "2": 0.008728724021006915
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      }
+    },
+    "264": {
+      "one_MR": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.3252118644067796,
+          "accuracy_cluster_percentile": [
+            0.30808615819209034,
+            0.3416313559322034
+          ],
+          "nll_nats": 1.32589826063121,
+          "predictive_information_score_nats": 0.060396100488680604,
+          "predictive_information_cluster_percentile": [
+            0.04105288325517353,
+            0.07890939563263188
+          ],
+          "mean_posterior_entropy_nats": 1.320531229744748,
+          "confusion_row_normalized": [
+            [
+              0.554378531073449,
+              0.30437853107344415,
+              0.10593220338983014,
+              0.03531073446327668
+            ],
+            [
+              0.27966101694915135,
+              0.6370056497175152,
+              0.037429378531073476,
+              0.04590395480225989
+            ],
+            [
+              0.5685028248587588,
+              0.34745762711864286,
+              0.055790960451977054,
+              0.028248587570621334
+            ],
+            [
+              0.45197740112994433,
+              0.41666666666666674,
+              0.07768361581920853,
+              0.05367231638418042
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.2989337395277998,
+            0.37349896480331374,
+            0.2015306122448976,
+            0.3290043290043281
+          ],
+          "recall": [
+            0.554378531073449,
+            0.6370056497175152,
+            0.055790960451977054,
+            0.05367231638418042
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0012996442973121699,
+            "1": 0.07891397959269872,
+            "2": -0.007102201442211407,
+            "3": 0.024138718550362252
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.48728813559322043,
+          "accuracy_cluster_percentile": [
+            0.45303672316384175,
+            0.5240112994350282
+          ],
+          "nll_nats": 0.6960084750293934,
+          "predictive_information_score_nats": -0.0028612944694481612,
+          "predictive_information_cluster_percentile": [
+            -0.0071065139313716275,
+            0.0015348559245348392
+          ],
+          "mean_posterior_entropy_nats": 0.6917449176729787,
+          "confusion_row_normalized": [
+            [
+              0.588276836158192,
+              0.41172316384180785
+            ],
+            [
+              0.6137005649717512,
+              0.3862994350282488
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.4894242068155112,
+            0.4840707964601772
+          ],
+          "recall": [
+            0.588276836158192,
+            0.3862994350282488
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0012996442973121699,
+            "2": -0.007102201442211407
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "one_MRf": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.35875706214689257,
+          "accuracy_cluster_percentile": [
+            0.3405720338983051,
+            0.37747175141242933
+          ],
+          "nll_nats": 1.2987763418062988,
+          "predictive_information_score_nats": 0.08751801931359182,
+          "predictive_information_cluster_percentile": [
+            0.06919742376512783,
+            0.10534674065811811
+          ],
+          "mean_posterior_entropy_nats": 1.2851933586983466,
+          "confusion_row_normalized": [
+            [
+              0.45127118644068026,
+              0.27966101694915046,
+              0.12994350282485873,
+              0.13912429378531066
+            ],
+            [
+              0.19703389830508442,
+              0.6596045197740115,
+              0.04872881355932205,
+              0.0946327683615821
+            ],
+            [
+              0.44915254237288355,
+              0.30579096045197596,
+              0.08050847457627094,
+              0.16454802259886953
+            ],
+            [
+              0.36228813559322176,
+              0.2888418079096038,
+              0.10522598870056525,
+              0.24364406779660927
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.30914368650217744,
+            0.43001841620626274,
+            0.22093023255813884,
+            0.3795379537953789
+          ],
+          "recall": [
+            0.45127118644068026,
+            0.6596045197740115,
+            0.08050847457627094,
+            0.24364406779660927
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0011242657255857887,
+            "1": 0.05699878392594864,
+            "2": -0.006979779934141584,
+            "3": 0.036839520575574984
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.4932909604519774,
+          "accuracy_cluster_percentile": [
+            0.45762711864406785,
+            0.5310734463276836
+          ],
+          "nll_nats": 0.6963997002628507,
+          "predictive_information_score_nats": -0.00325251970290541,
+          "predictive_information_cluster_percentile": [
+            -0.008190566689602718,
+            0.0017980991893402631
+          ],
+          "mean_posterior_entropy_nats": 0.6913698875593839,
+          "confusion_row_normalized": [
+            [
+              0.5911016949152542,
+              0.40889830508474573
+            ],
+            [
+              0.6045197740112993,
+              0.3954802259887007
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.4943886591848789,
+            0.49165935030728725
+          ],
+          "recall": [
+            0.5911016949152542,
+            0.3954802259887007
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0011242657255857887,
+            "2": -0.006979779934141584
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "two_MR_MLambda": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.41613700564971756,
+          "accuracy_cluster_percentile": [
+            0.39406338276836156,
+            0.43855932203389825
+          ],
+          "nll_nats": 1.2080863131749202,
+          "predictive_information_score_nats": 0.17820804794497036,
+          "predictive_information_cluster_percentile": [
+            0.1534734396463564,
+            0.2027332019841852
+          ],
+          "mean_posterior_entropy_nats": 1.2044374494759473,
+          "confusion_row_normalized": [
+            [
+              0.39689265536723356,
+              0.23375706214689157,
+              0.19350282485875656,
+              0.1758474576271184
+            ],
+            [
+              0.15042372881356006,
+              0.7182203389830497,
+              0.06709039548022615,
+              0.064265536723164
+            ],
+            [
+              0.3947740112994369,
+              0.24081920903954684,
+              0.16384180790960445,
+              0.20056497175141183
+            ],
+            [
+              0.26765536723163696,
+              0.2055084745762706,
+              0.14124293785310765,
+              0.38559322033898485
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.3280793928779926,
+            0.5136363636363642,
+            0.2896379525593008,
+            0.46666666666666823
+          ],
+          "recall": [
+            0.39689265536723356,
+            0.7182203389830497,
+            0.16384180790960445,
+            0.38559322033898485
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0015232363391426583,
+            "1": -0.04380295198192006,
+            "2": -0.006519967477827538,
+            "3": 0.07228774848441284
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.506002824858757,
+          "accuracy_cluster_percentile": [
+            0.466454802259887,
+            0.5483845338983052
+          ],
+          "nll_nats": 0.6976835651032058,
+          "predictive_information_score_nats": -0.004536384543260552,
+          "predictive_information_cluster_percentile": [
+            -0.012182629160063518,
+            0.003923359359759626
+          ],
+          "mean_posterior_entropy_nats": 0.6899017930535938,
+          "confusion_row_normalized": [
+            [
+              0.5762711864406782,
+              0.42372881355932185
+            ],
+            [
+              0.5642655367231643,
+              0.4357344632768358
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.5052631578947367,
+            0.5069843878389482
+          ],
+          "recall": [
+            0.5762711864406782,
+            0.4357344632768358
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0015232363391426583,
+            "2": -0.006519967477827538
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "three_MR_MLambda_Mf": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.42408192090395486,
+          "accuracy_cluster_percentile": [
+            0.4014830508474577,
+            0.4461555437853108
+          ],
+          "nll_nats": 1.1925343079146313,
+          "predictive_information_score_nats": 0.19376005320525924,
+          "predictive_information_cluster_percentile": [
+            0.1664895916198641,
+            0.22062242591532089
+          ],
+          "mean_posterior_entropy_nats": 1.18857577196837,
+          "confusion_row_normalized": [
+            [
+              0.38700564971751594,
+              0.23870056497175038,
+              0.19844632768361534,
+              0.17584745762711848
+            ],
+            [
+              0.14124293785310824,
+              0.7295197740112981,
+              0.06285310734463297,
+              0.06638418079096065
+            ],
+            [
+              0.38771186440678146,
+              0.23658192090395375,
+              0.16313559322033896,
+              0.21257062146892586
+            ],
+            [
+              0.25918079096045027,
+              0.18432203389830454,
+              0.1398305084745764,
+              0.41666666666666874
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.32932692307692385,
+            0.5251652262328425,
+            0.2891113892365457,
+            0.4781199351701799
+          ],
+          "recall": [
+            0.38700564971751594,
+            0.7295197740112981,
+            0.16313559322033896,
+            0.41666666666666874
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0023338484685764796,
+            "1": -0.05932555665796605,
+            "2": -0.009607460230486668,
+            "3": 0.08504592155253107
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.5049435028248588,
+          "accuracy_cluster_percentile": [
+            0.4643361581920903,
+            0.5476694915254237
+          ],
+          "nll_nats": 0.6986284349419121,
+          "predictive_information_score_nats": -0.0054812543819667825,
+          "predictive_information_cluster_percentile": [
+            -0.013793638805659758,
+            0.0033395269063629662
+          ],
+          "mean_posterior_entropy_nats": 0.6895399611632695,
+          "confusion_row_normalized": [
+            [
+              0.5826271186440679,
+              0.4173728813559321
+            ],
+            [
+              0.5727401129943506,
+              0.4272598870056495
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.5042787286063569,
+            0.5058528428093645
+          ],
+          "recall": [
+            0.5826271186440679,
+            0.4272598870056495
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": -0.0023338484685764796,
+            "2": -0.009607460230486668
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      },
+      "three_MR_MLambda_Mf_precise": {
+        "four": {
+          "n_eos": 236,
+          "n_evaluation_draws": 5664,
+          "accuracy": 0.5958686440677966,
+          "accuracy_cluster_percentile": [
+            0.5649717514124295,
+            0.6237641242937852
+          ],
+          "nll_nats": 0.7964356311922507,
+          "predictive_information_score_nats": 0.5898587299276399,
+          "predictive_information_cluster_percentile": [
+            0.5381028669445302,
+            0.6384076542066067
+          ],
+          "mean_posterior_entropy_nats": 0.6883275094745369,
+          "confusion_row_normalized": [
+            [
+              0.46892655367231767,
+              0.021186440677965976,
+              0.37994350282485806,
+              0.12994350282485834
+            ],
+            [
+              0.01765536723163872,
+              0.956214689265536,
+              0.011299435028248782,
+              0.014830508474576525
+            ],
+            [
+              0.4604519774011321,
+              0.018361581920903883,
+              0.3340395480225979,
+              0.1871468926553662
+            ],
+            [
+              0.18008474576271138,
+              0.027542372881355914,
+              0.16807909604519747,
+              0.6242937853107353
+            ]
+          ],
+          "labels": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "precision_equal_prior": [
+            0.41604010025062654,
+            0.9344375431331956,
+            0.3739130434782605,
+            0.652880354505171
+          ],
+          "recall": [
+            0.46892655367231767,
+            0.956214689265536,
+            0.3340395480225979,
+            0.6242937853107353
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": 0.0889028850308924,
+            "1": -1.0017933651013249,
+            "2": 0.008561172820397213,
+            "3": 0.30252867165116776
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        },
+        "binary": {
+          "n_eos": 118,
+          "n_evaluation_draws": 2832,
+          "accuracy": 0.4858757062146893,
+          "accuracy_cluster_percentile": [
+            0.4371468926553673,
+            0.5353195621468926
+          ],
+          "nll_nats": 0.7974823316242794,
+          "predictive_information_score_nats": -0.10433515106433411,
+          "predictive_information_cluster_percentile": [
+            -0.17414547664238267,
+            -0.047929471294643644
+          ],
+          "mean_posterior_entropy_nats": 0.6437159766200128,
+          "confusion_row_normalized": [
+            [
+              0.5211864406779665,
+              0.4788135593220335
+            ],
+            [
+              0.5494350282485883,
+              0.4505649717514118
+            ]
+          ],
+          "labels": [
+            0,
+            2
+          ],
+          "precision_equal_prior": [
+            0.4868073878627967,
+            0.4848024316109421
+          ],
+          "recall": [
+            0.5211864406779665,
+            0.4505649717514118
+          ],
+          "log_bf_2_vs_0_by_true_class": {
+            "0": 0.0889028850308924,
+            "2": 0.008561172820397213
+          },
+          "bootstrap_note": "Conditional on frozen catalogue and fitted reference folds; not full model/prior uncertainty."
+        }
+      }
+    }
+  },
+  "caveats": "Finite held-out catalogue, illustrative independent errors, uniform masses; predictive information score is not the exact continuous-prior mutual information. Mixed scenarios are not a real observational posterior."
+}

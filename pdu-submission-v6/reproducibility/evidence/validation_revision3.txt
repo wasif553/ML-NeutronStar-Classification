@@ -1,0 +1,1 @@
+PASS: nine exact observed-point reproductions; 1,791 permutations; all eight injection scales; exact 50% zero-injection tie control; valid interval ordering.
