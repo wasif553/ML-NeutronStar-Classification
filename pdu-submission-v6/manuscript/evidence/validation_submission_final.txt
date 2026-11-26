@@ -1,0 +1,1 @@
+PASS: original precise shared grid points reproduce exactly; zero injection 50%; simultaneous crossing a=3 for both curves; 132/528 low-noise maximum point difference 0.071 percentage points; nine tidal shifts; joint p=0.382.
